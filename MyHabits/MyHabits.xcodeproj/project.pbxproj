@@ -16,6 +16,7 @@
 		45966FEF258CE268007A3B5A /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45966FEE258CE268007A3B5A /* InfoViewController.swift */; };
 		45966FF6258CEA78007A3B5A /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45966FF5258CEA78007A3B5A /* TabBarViewController.swift */; };
 		45966FF9258CEAD0007A3B5A /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45966FF8258CEAD0007A3B5A /* NavigationViewController.swift */; };
+		84CBD674259C891600A204B7 /* HabitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CBD673259C891600A204B7 /* HabitsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		45966FEE258CE268007A3B5A /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		45966FF5258CEA78007A3B5A /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		45966FF8258CEAD0007A3B5A /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
+		84CBD673259C891600A204B7 /* HabitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 		454CBFCD258C987900D2CD16 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				84CBD673259C891600A204B7 /* HabitsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -178,6 +181,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45966FF9258CEAD0007A3B5A /* NavigationViewController.swift in Sources */,
+				84CBD674259C891600A204B7 /* HabitsView.swift in Sources */,
 				454CBFC6258C906400D2CD16 /* HabitsStore.swift in Sources */,
 				45966FEC258CE25A007A3B5A /* HabitsViewController.swift in Sources */,
 				454CBFB0258C8C8D00D2CD16 /* AppDelegate.swift in Sources */,
