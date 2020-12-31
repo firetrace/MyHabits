@@ -18,6 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = NavigationViewController()
         window?.makeKeyAndVisible()
         
+        UINavigationBar.appearance().prefersLargeTitles = true
+        UINavigationBar.appearance().tintColor = getColorStyle(style: .Magenta)
+        
+        UITabBar.appearance().tintColor = getColorStyle(style: .Magenta)
+        
         return true
     }
 }

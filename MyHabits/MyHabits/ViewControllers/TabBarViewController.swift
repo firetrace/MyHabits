@@ -23,6 +23,5 @@ class TabBarViewController: UITabBarController {
         infoViewController.tabBarItem = UITabBarItem(title: "Информация", image: UIImage(systemName: "info.circle.fill"), tag: 1)
         
         viewControllers = [habitsViewController, infoViewController]
-        tabBar.tintColor = getColorStyle(style: .Magenta)
     }
 }

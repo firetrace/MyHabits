@@ -8,9 +8,13 @@
 import UIKit
 
 class HabitsViewController: UIViewController {
-
-    private let headerTitleItem = UIBarButtonItem(customView: HabitsView(type: .Title))
-    private let headerButtonItem = UIBarButtonItem(customView: HabitsView(type: .Button))
+    
+    private lazy var addButton: UIBarButtonItem = {
+        var button = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: nil)
+        button.tintColor = getColorStyle(style: .Magenta)
+        
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,15 +24,9 @@ class HabitsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-                
-        tabBarController?.navigationItem.leftBarButtonItem = headerTitleItem
-        tabBarController?.navigationItem.rightBarButtonItem = headerButtonItem
+          
+        tabBarController?.navigationItem.title = "Сегодня"
+        tabBarController?.navigationItem.rightBarButtonItem = addButton
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        tabBarController?.navigationItem.rightBarButtonItem = nil
-        tabBarController?.navigationItem.leftBarButtonItem = nil
-    }
+
 }

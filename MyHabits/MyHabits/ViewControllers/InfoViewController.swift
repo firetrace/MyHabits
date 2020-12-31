@@ -14,4 +14,11 @@ class InfoViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+          
+        tabBarController?.navigationItem.title = "Информация"
+        tabBarController?.navigationItem.rightBarButtonItem = nil
+    }
 }
