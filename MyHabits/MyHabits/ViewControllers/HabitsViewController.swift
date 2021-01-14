@@ -10,7 +10,7 @@ import UIKit
 class HabitsViewController: UIViewController {
 
     private lazy var addButton: UIBarButtonItem = {
-        var button = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: nil)
+        var button = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(add))
         button.tintColor = getColorStyle(style: .Magenta)
             
         return button
@@ -29,6 +29,11 @@ class HabitsViewController: UIViewController {
         
         tabBarController?.navigationItem.title = "Сегодня"
         tabBarController?.navigationItem.rightBarButtonItem = addButton
+    }
+    
+    @objc private func add() {
+        let habitViewController = HabitViewController()
+        navigationController?.present(habitViewController, animated: true, completion: nil)
     }
 
 }
