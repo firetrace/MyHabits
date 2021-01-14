@@ -18,10 +18,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = NavigationViewController()
         window?.makeKeyAndVisible()
         
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor(displayP3Red: 248/255, green: 248/255, blue: 248/255, alpha: 1)
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+
+        let color = getColorStyle(style: .Magenta)
+        
+        UINavigationBar.appearance().tintColor = color
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().prefersLargeTitles = true
         UINavigationBar.appearance().tintColor = getColorStyle(style: .Magenta)
         
-        UITabBar.appearance().tintColor = getColorStyle(style: .Magenta)
+        UITabBar.appearance().tintColor = color
         
         return true
     }

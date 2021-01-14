@@ -17,7 +17,9 @@ class InfoViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-          
+
+        tabBarController?.navigationItem.largeTitleDisplayMode = .never
+        
         tabBarController?.navigationItem.title = "Информация"
         tabBarController?.navigationItem.rightBarButtonItem = nil
     }
