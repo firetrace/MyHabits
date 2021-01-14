@@ -35,5 +35,4 @@ class HabitsViewController: UIViewController {
         let habitViewController = HabitViewController()
         navigationController?.present(habitViewController, animated: true, completion: nil)
     }
-
 }

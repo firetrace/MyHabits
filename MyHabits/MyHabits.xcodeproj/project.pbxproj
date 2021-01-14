@@ -23,6 +23,7 @@
 		45DC50A425B076B200A6F692 /* HabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC50A325B076B200A6F692 /* HabitViewController.swift */; };
 		45DC50A725B0797E00A6F692 /* HabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC50A625B0797E00A6F692 /* HabitView.swift */; };
 		45DC50AA25B08E6500A6F692 /* HabitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC50A925B08E6500A6F692 /* HabitModel.swift */; };
+		45DC50AF25B0B1BB00A6F692 /* HabitProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC50AE25B0B1BB00A6F692 /* HabitProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		45DC50A325B076B200A6F692 /* HabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitViewController.swift; sourceTree = "<group>"; };
 		45DC50A625B0797E00A6F692 /* HabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitView.swift; sourceTree = "<group>"; };
 		45DC50A925B08E6500A6F692 /* HabitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitModel.swift; sourceTree = "<group>"; };
+		45DC50AE25B0B1BB00A6F692 /* HabitProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 		454CBFAE258C8C8D00D2CD16 /* MyHabits */ = {
 			isa = PBXGroup;
 			children = (
+				45DC50AD25B0B1A900A6F692 /* Protocols */,
 				454CBFCE258C987E00D2CD16 /* ViewControllers */,
 				454CBFCD258C987900D2CD16 /* Views */,
 				454CBFCC258C986D00D2CD16 /* Models */,
@@ -127,6 +130,14 @@
 				45DC50A325B076B200A6F692 /* HabitViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		45DC50AD25B0B1A900A6F692 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				45DC50AE25B0B1BB00A6F692 /* HabitProtocol.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,6 +218,7 @@
 				45DC50AA25B08E6500A6F692 /* HabitModel.swift in Sources */,
 				45966FEC258CE25A007A3B5A /* HabitsViewController.swift in Sources */,
 				454CBFB0258C8C8D00D2CD16 /* AppDelegate.swift in Sources */,
+				45DC50AF25B0B1BB00A6F692 /* HabitProtocol.swift in Sources */,
 				45DC50A425B076B200A6F692 /* HabitViewController.swift in Sources */,
 				45966FF6258CEA78007A3B5A /* TabBarViewController.swift in Sources */,
 				45DC509B25B0358900A6F692 /* HabitsExtension.swift in Sources */,
@@ -353,7 +365,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3J2DF3TR3Q;
 				INFOPLIST_FILE = MyHabits/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -373,7 +385,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3J2DF3TR3Q;
 				INFOPLIST_FILE = MyHabits/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

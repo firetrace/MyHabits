@@ -8,31 +8,40 @@
 import UIKit
 
 struct HabitModel {
+    
+    weak var delegate: HabitProtocol?
+    
     private(set) var name: String?
-    private(set) var date: Date?
-    private(set) var color: UIColor?
+    private(set) var date: Date? {
+        didSet {
+            if let thisDate = date {
+                delegate?.changeDate(thisDate)
+            }
+        }
+    }
+    private(set) var color: UIColor? {
+        didSet {
+            if let thisColor = color {
+                delegate?.changeColor(thisColor)
+            }
+        }
+    }
     
     init() {
         self.name = nil
         self.date = nil
         self.color = nil
     }
-    
-    init(name: String, date: Date, color: UIColor) {
-        self.name = name
-        self.date = date
-        self.color = color
-    }
-    
-    mutating func updateName(_ name: String) {
+        
+    mutating func updateName(_ name: String?) {
         self.name = name
     }
     
-    mutating func updateDate(_ date: Date) {
+    mutating func updateDate(_ date: Date?) {
         self.date = date
     }
     
-    mutating func updateColor(_ color: UIColor) {
+    mutating func updateColor(_ color: UIColor?) {
         self.color = color
     }
 }

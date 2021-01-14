@@ -23,6 +23,7 @@ class HabitViewController: UIViewController {
     
     private lazy var habitView: HabitView =  {
         var view = HabitView(frame: .zero)
+        view.thisDelegate = self
         view.toAutoLayout()
         
         return view;
@@ -56,5 +57,25 @@ class HabitViewController: UIViewController {
     
     @objc private func cancel() {
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension HabitViewController: HabitProtocol {
+
+    func changeColor(_ color: UIColor) {
+        let picker = UIColorPickerViewController()
+        picker.selectedColor = color
+        picker.delegate = self
+        
+        self.present(picker, animated: true, completion: nil)
+    }
+    
+    func changeDate(_ date: Date) { }
+}
+
+extension HabitViewController: UIColorPickerViewControllerDelegate {
+    
+    func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
+        habitView.data.updateColor(viewController.selectedColor)
     }
 }

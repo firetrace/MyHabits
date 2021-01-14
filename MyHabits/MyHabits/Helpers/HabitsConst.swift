@@ -40,3 +40,7 @@ let infoDescription = """
 
 Источник: psychbook.ru
 """
+
+let habitNameTitle = "НАЗВАНИЕ"
+let habitColorTitle = "ЦВЕТ"
+let habitDateTitle = "ВРЕМЯ"
