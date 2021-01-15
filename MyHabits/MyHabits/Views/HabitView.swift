@@ -131,8 +131,7 @@ class HabitView: UIView {
                                      datePicker.topAnchor.constraint(equalTo: dateDescriptionLabel.bottomAnchor, constant: topConst15),
                                      datePicker.leadingAnchor.constraint(equalTo: leadingAnchor),
                                      datePicker.trailingAnchor.constraint(equalTo: trailingAnchor),
-                                     datePickerBottom
-        ])
+                                     datePickerBottom])
     }
     
     @objc private func updateName(_ textField: UITextField) {
@@ -150,7 +149,11 @@ class HabitView: UIView {
 
 
 extension HabitView : HabitProtocol {
-    
+
+    func changeName(_ name: String) {
+        nameText.text = name
+    }
+        
     func changeColor(_ color: UIColor) {
         colorButton.backgroundColor = color
     }
@@ -169,4 +172,6 @@ extension HabitView : HabitProtocol {
         
         dateDescriptionLabel.attributedText = baseStr
     }
+        
+    func changeCheck() { }
 }

@@ -12,6 +12,10 @@
 		454CBFBC258C8C8F00D2CD16 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 454CBFBA258C8C8F00D2CD16 /* LaunchScreen.storyboard */; };
 		454CBFC6258C906400D2CD16 /* HabitsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CBFC5258C906400D2CD16 /* HabitsStore.swift */; };
 		454CBFD0258C989E00D2CD16 /* HabitsDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CBFCF258C989E00D2CD16 /* HabitsDesign.swift */; };
+		4588853225B1BA89004403B8 /* ProgressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4588853125B1BA89004403B8 /* ProgressCollectionViewCell.swift */; };
+		4588853525B1BAA2004403B8 /* HabitCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4588853425B1BAA2004403B8 /* HabitCollectionViewCell.swift */; };
+		4588853825B1BACD004403B8 /* ViewCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4588853725B1BACD004403B8 /* ViewCellProtocol.swift */; };
+		4588853B25B20D00004403B8 /* HabitsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4588853A25B20D00004403B8 /* HabitsProtocol.swift */; };
 		45966FEC258CE25A007A3B5A /* HabitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45966FEB258CE25A007A3B5A /* HabitsViewController.swift */; };
 		45966FEF258CE268007A3B5A /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45966FEE258CE268007A3B5A /* InfoViewController.swift */; };
 		45966FF6258CEA78007A3B5A /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45966FF5258CEA78007A3B5A /* TabBarViewController.swift */; };
@@ -34,6 +38,10 @@
 		454CBFBD258C8C8F00D2CD16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		454CBFC5258C906400D2CD16 /* HabitsStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitsStore.swift; sourceTree = "<group>"; };
 		454CBFCF258C989E00D2CD16 /* HabitsDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsDesign.swift; sourceTree = "<group>"; };
+		4588853125B1BA89004403B8 /* ProgressCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCollectionViewCell.swift; sourceTree = "<group>"; };
+		4588853425B1BAA2004403B8 /* HabitCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCollectionViewCell.swift; sourceTree = "<group>"; };
+		4588853725B1BACD004403B8 /* ViewCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCellProtocol.swift; sourceTree = "<group>"; };
+		4588853A25B20D00004403B8 /* HabitsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsProtocol.swift; sourceTree = "<group>"; };
 		45966FEB258CE25A007A3B5A /* HabitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsViewController.swift; sourceTree = "<group>"; };
 		45966FEE258CE268007A3B5A /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		45966FF5258CEA78007A3B5A /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +124,8 @@
 			children = (
 				45DC509725B033B700A6F692 /* InfoView.swift */,
 				45DC50A625B0797E00A6F692 /* HabitView.swift */,
+				4588853125B1BA89004403B8 /* ProgressCollectionViewCell.swift */,
+				4588853425B1BAA2004403B8 /* HabitCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -136,6 +146,8 @@
 			isa = PBXGroup;
 			children = (
 				45DC50AE25B0B1BB00A6F692 /* HabitProtocol.swift */,
+				4588853725B1BACD004403B8 /* ViewCellProtocol.swift */,
+				4588853A25B20D00004403B8 /* HabitsProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -221,9 +233,13 @@
 				45DC50AF25B0B1BB00A6F692 /* HabitProtocol.swift in Sources */,
 				45DC50A425B076B200A6F692 /* HabitViewController.swift in Sources */,
 				45966FF6258CEA78007A3B5A /* TabBarViewController.swift in Sources */,
+				4588853825B1BACD004403B8 /* ViewCellProtocol.swift in Sources */,
 				45DC509B25B0358900A6F692 /* HabitsExtension.swift in Sources */,
 				45966FEF258CE268007A3B5A /* InfoViewController.swift in Sources */,
+				4588853225B1BA89004403B8 /* ProgressCollectionViewCell.swift in Sources */,
 				454CBFD0258C989E00D2CD16 /* HabitsDesign.swift in Sources */,
+				4588853B25B20D00004403B8 /* HabitsProtocol.swift in Sources */,
+				4588853525B1BAA2004403B8 /* HabitCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

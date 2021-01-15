@@ -8,6 +8,8 @@
 import UIKit
 
 class HabitViewController: UIViewController {
+    
+    weak var thisDelegate: HabitsProtocol?
 
     private lazy var navigationBar: UINavigationBar = {
         let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 54))
@@ -52,6 +54,7 @@ class HabitViewController: UIViewController {
         }
         
         HabitsStore.shared.habits.append(Habit(name: name, date: date, color: color))
+        thisDelegate?.updateData()
         cancel()
     }
     
@@ -62,6 +65,10 @@ class HabitViewController: UIViewController {
 
 extension HabitViewController: HabitProtocol {
 
+    func changeName(_ name: String) {
+        habitView.data.updateName(name)
+    }
+    
     func changeColor(_ color: UIColor) {
         let picker = UIColorPickerViewController()
         picker.selectedColor = color
@@ -73,6 +80,8 @@ extension HabitViewController: HabitProtocol {
     func changeDate(_ date: Date) {
         habitView.data.updateDate(date)
     }
+    
+    func changeCheck() { }
 }
 
 extension HabitViewController: UIColorPickerViewControllerDelegate {

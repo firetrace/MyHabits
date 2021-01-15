@@ -7,6 +7,11 @@
 
 import UIKit
 
+let leadingConst4: CGFloat = 4
+let trailingConst4: CGFloat = -4
+let topConst4: CGFloat = 4
+let bottomConst4: CGFloat = -4
+
 let leadingConst7: CGFloat = 7
 let trailingConst7: CGFloat = -7
 let topConst7: CGFloat = 7
@@ -16,6 +21,16 @@ let leadingConst8: CGFloat = 8
 let trailingConst8: CGFloat = -8
 let topConst8: CGFloat = 8
 let bottomConst8: CGFloat = -8
+
+let leadingConst10: CGFloat = 10
+let trailingConst10: CGFloat = -10
+let topConst10: CGFloat = 10
+let bottomConst10: CGFloat = -10
+
+let leadingConst12: CGFloat = 12
+let trailingConst12: CGFloat = -12
+let topConst12: CGFloat = 12
+let bottomConst12: CGFloat = -12
 
 let leadingConst15: CGFloat = 15
 let trailingConst15: CGFloat = -15
@@ -27,10 +42,20 @@ let trailingConst16: CGFloat = -16
 let topConst16: CGFloat = 16
 let bottomConst16: CGFloat = -16
 
+let leadingConst20: CGFloat = 20
+let trailingConst20: CGFloat = -20
+let topConst20: CGFloat = 20
+let bottomConst20: CGFloat = -20
+
 let leadingConst22: CGFloat = 22
 let trailingConst22: CGFloat = -22
 let topConst22: CGFloat = 22
 let bottomConst22: CGFloat = -22
+
+let leadingConst26: CGFloat = 26
+let trailingConst26: CGFloat = -26
+let topConst26: CGFloat = 26
+let bottomConst26: CGFloat = -26
 
 let infoTitle = "Привычка за 21 день"
 let infoDescription = """
@@ -56,3 +81,5 @@ let habitNamePlaceholder = "Бегать по утрам, спать 8 часо�
 let habitColorTitle = "ЦВЕТ"
 let habitDateTitle = "ВРЕМЯ"
 let habitDateDescriptionPattern = "Каждый день в "
+
+let progressHeader = "Все получится!"
