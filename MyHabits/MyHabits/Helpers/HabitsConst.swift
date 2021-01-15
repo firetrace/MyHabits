@@ -7,10 +7,20 @@
 
 import UIKit
 
+let leadingConst7: CGFloat = 7
+let trailingConst7: CGFloat = -7
+let topConst7: CGFloat = 7
+let bottomConst7: CGFloat = -7
+
 let leadingConst8: CGFloat = 8
 let trailingConst8: CGFloat = -8
 let topConst8: CGFloat = 8
 let bottomConst8: CGFloat = -8
+
+let leadingConst15: CGFloat = 15
+let trailingConst15: CGFloat = -15
+let topConst15: CGFloat = 15
+let bottomConst15: CGFloat = -15
 
 let leadingConst16: CGFloat = 16
 let trailingConst16: CGFloat = -16
@@ -42,5 +52,7 @@ let infoDescription = """
 """
 
 let habitNameTitle = "НАЗВАНИЕ"
+let habitNamePlaceholder = "Бегать по утрам, спать 8 часов и т.п."
 let habitColorTitle = "ЦВЕТ"
 let habitDateTitle = "ВРЕМЯ"
+let habitDateDescriptionPattern = "Каждый день в "

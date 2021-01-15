@@ -11,13 +11,7 @@ class HabitView: UIView {
 
     weak var thisDelegate: HabitProtocol?
     
-    lazy var data: HabitModel =  {
-        var model = HabitModel()
-        model.delegate = self
-        model.updateColor(getColorStyle(style: .Orange))
-        
-        return model
-    }()
+    var data: HabitModel = HabitModel()
         
     private lazy var nameLabel: UILabel = {
         var label = UILabel(frame: .zero)
@@ -31,7 +25,7 @@ class HabitView: UIView {
     private lazy var nameText: UITextField = {
         var text = UITextField(frame: .zero)
         text.font = getFontStyle(style: .Body)
-        text.placeholder = "Test"
+        text.placeholder = habitNamePlaceholder
         text.addTarget(self, action: #selector(updateName(_:)), for: .editingChanged)
         text.toAutoLayout()
         
@@ -50,10 +44,8 @@ class HabitView: UIView {
     private lazy var colorButton: UIButton = {
         var button = UIButton(frame: .zero)
         button.addTarget(self, action: #selector(updateColor), for: .touchUpInside)
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.systemBackground.cgColor
-        button.layer.cornerRadius = 100/2
-        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 15
+        button.clipsToBounds = true
         button.toAutoLayout()
         
         return button
@@ -70,8 +62,6 @@ class HabitView: UIView {
     
     private lazy var dateDescriptionLabel: UILabel = {
         var label = UILabel(frame: .zero)
-        label.text = habitDateTitle
-        label.font = getFontStyle(style: .Footnote1)
         label.toAutoLayout()
         
         return label
@@ -79,8 +69,9 @@ class HabitView: UIView {
     
     private lazy var datePicker: UIDatePicker = {
         var picker = UIDatePicker(frame: .zero)
+        picker.preferredDatePickerStyle = .wheels
         picker.datePickerMode = .time
-        picker.addTarget(self, action: #selector(updateDate(_:)), for: .touchUpInside)
+        picker.addTarget(self, action: #selector(updateDate(_:)), for: .valueChanged)
         picker.toAutoLayout()
         
         return picker
@@ -89,6 +80,10 @@ class HabitView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        data.delegate = self
+        data.updateColor(getColorStyle(style: .Orange))
+        data.updateDate(Date())
+            
         setupLayout()
     }
         
@@ -97,7 +92,47 @@ class HabitView: UIView {
     }
     
     private func setupLayout() {
+        addSubview(nameLabel)
+        addSubview(nameText)
+        addSubview(colorLabel)
+        addSubview(colorButton)
+        addSubview(dateLabel)
+        addSubview(dateDescriptionLabel)
+        addSubview(datePicker)
         
+        let datePickerBottom = datePicker.bottomAnchor.constraint(equalTo: bottomAnchor)
+        datePickerBottom.priority = .defaultLow
+        
+        NSLayoutConstraint.activate([nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: topConst22),
+                                     nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingConst16),
+                                     nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: trailingConst16),
+                                     
+                                     nameText.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: topConst7),
+                                     nameText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingConst16),
+                                     nameText.trailingAnchor.constraint(equalTo: trailingAnchor, constant: trailingConst16),
+                                     
+                                     colorLabel.topAnchor.constraint(equalTo: nameText.bottomAnchor, constant: topConst15),
+                                     colorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingConst16),
+                                     colorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: trailingConst16),
+                                     
+                                     colorButton.topAnchor.constraint(equalTo: colorLabel.bottomAnchor, constant: topConst7),
+                                     colorButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingConst16),
+                                     colorButton.widthAnchor.constraint(equalToConstant: 30),
+                                     colorButton.heightAnchor.constraint(equalToConstant: 30),
+                                     
+                                     dateLabel.topAnchor.constraint(equalTo: colorButton.bottomAnchor, constant: topConst15),
+                                     dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingConst16),
+                                     dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: trailingConst16),
+                                     
+                                     dateDescriptionLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: topConst7),
+                                     dateDescriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingConst16),
+                                     dateDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: trailingConst16),
+                                     
+                                     datePicker.topAnchor.constraint(equalTo: dateDescriptionLabel.bottomAnchor, constant: topConst15),
+                                     datePicker.leadingAnchor.constraint(equalTo: leadingAnchor),
+                                     datePicker.trailingAnchor.constraint(equalTo: trailingAnchor),
+                                     datePickerBottom
+        ])
     }
     
     @objc private func updateName(_ textField: UITextField) {
@@ -105,11 +140,7 @@ class HabitView: UIView {
     }
     
     @objc private func updateColor() {
-        guard let delegate = thisDelegate else {
-            return
-        }
-        
-        delegate.changeColor(colorButton.backgroundColor ?? getColorStyle(style: .Orange))
+        thisDelegate?.changeColor(colorButton.backgroundColor ?? getColorStyle(style: .Orange))
     }
     
     @objc private func updateDate(_ datePicker: UIDatePicker) {
@@ -125,6 +156,17 @@ extension HabitView : HabitProtocol {
     }
     
     func changeDate(_ date: Date) {
+        let baseStr = NSMutableAttributedString(string: habitDateDescriptionPattern,
+                                                attributes: [NSAttributedString.Key.font: getFontStyle(style: .Body)])
         
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        
+        let dateStr = NSAttributedString(string: formatter.string(from: date),
+                                         attributes: [NSAttributedString.Key.font: getFontStyle(style: .Body),
+                                                      NSAttributedString.Key.foregroundColor: getColorStyle(style: .Magenta)])
+        baseStr.append(dateStr)
+        
+        dateDescriptionLabel.attributedText = baseStr
     }
 }

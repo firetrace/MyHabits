@@ -11,8 +11,8 @@ class HabitViewController: UIViewController {
 
     private lazy var navigationBar: UINavigationBar = {
         let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 54))
+        
         let navigationItem = UINavigationItem(title: "Создать")
-                
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(cancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(save))
         
@@ -70,7 +70,9 @@ extension HabitViewController: HabitProtocol {
         self.present(picker, animated: true, completion: nil)
     }
     
-    func changeDate(_ date: Date) { }
+    func changeDate(_ date: Date) {
+        habitView.data.updateDate(date)
+    }
 }
 
 extension HabitViewController: UIColorPickerViewControllerDelegate {
