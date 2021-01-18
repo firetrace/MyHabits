@@ -80,6 +80,9 @@ extension HabitsViewController: UICollectionViewDataSource {
         }
         else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HabitCollectionViewCell.reuseId, for: indexPath)
+            if let habitCell = cell as? HabitCollectionViewCell {
+                habitCell.thisDelegate = self
+            }
             if let editCell = cell as? ViewCellProtocol {
                 editCell.updateCell(object: HabitsStore.shared.habits[indexPath.item] as Any)
             }

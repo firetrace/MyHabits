@@ -7,7 +7,7 @@
 
 protocol ViewCellProtocol {
     static var reuseId: String { get }
-    
+
     func layoutUpdate()
     func updateCell(object: Any)
 }

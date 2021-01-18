@@ -14,27 +14,27 @@ struct HabitModel {
     private(set) var name: String? {
         didSet {
             if let thisName = name {
-                delegate?.changeName(thisName)
+                //delegate?.changeName(thisName)
             }
         }
     }
     private(set) var date: Date? {
         didSet {
             if let thisDate = date {
-                delegate?.changeDate(thisDate)
+                //delegate?.changeDate(thisDate)
             }
         }
     }
     private(set) var color: UIColor? {
         didSet {
             if let thisColor = color {
-                delegate?.changeColor(thisColor)
+                //delegate?.changeColor(thisColor)
             }
         }
     }
     private(set) var dateCheck: Date? {
         didSet {
-            delegate?.changeCheck()
+            //delegate?.changeCheck()
         }
     }
     

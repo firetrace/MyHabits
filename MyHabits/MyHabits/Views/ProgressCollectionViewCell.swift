@@ -35,7 +35,6 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         view.progressTintColor = getColorStyle(style: .Magenta)
         view.layer.cornerRadius = 4
         view.layer.masksToBounds = true
-        view.progress = 0.5
         view.toAutoLayout()
         
         return view
@@ -84,7 +83,7 @@ extension ProgressCollectionViewCell: ViewCellProtocol {
     func updateCell(object: Any) {
         if let progress = object as? Float {
             progressBar.progress = progress
-            progressLabel.text = String(format: "%d %%", progress * 100)
+            progressLabel.text = String(format: "%.0f %%", progress * 100)
         }
     }
 }

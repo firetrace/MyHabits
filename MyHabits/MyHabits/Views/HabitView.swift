@@ -11,8 +11,8 @@ class HabitView: UIView {
 
     weak var thisDelegate: HabitProtocol?
     
-    var data: HabitModel = HabitModel()
-        
+    var data: Habit = Habit(name: "", date: Date(), color: getColorStyle(style: .Orange))
+            
     private lazy var nameLabel: UILabel = {
         var label = UILabel(frame: .zero)
         label.text = habitNameTitle
@@ -79,11 +79,11 @@ class HabitView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        data.delegate = self
-        data.updateColor(getColorStyle(style: .Orange))
-        data.updateDate(Date())
             
+        nameText.text = data.name
+        colorButton.backgroundColor = data.color
+        datePicker.date = data.date
+        updateDateDescription()
         setupLayout()
     }
         
@@ -135,43 +135,43 @@ class HabitView: UIView {
     }
     
     @objc private func updateName(_ textField: UITextField) {
-        data.updateName(textField.text)
+        data.name = textField.text ?? ""
     }
     
     @objc private func updateColor() {
-        thisDelegate?.changeColor(colorButton.backgroundColor ?? getColorStyle(style: .Orange))
+        let picker = UIColorPickerViewController()
+        picker.selectedColor = data.color
+        picker.delegate = self
+        
+        thisDelegate?.presentController(picker, animated: true, completion: nil)
     }
     
     @objc private func updateDate(_ datePicker: UIDatePicker) {
-        data.updateDate(datePicker.date)
-    }
-}
-
-
-extension HabitView : HabitProtocol {
-
-    func changeName(_ name: String) {
-        nameText.text = name
-    }
-        
-    func changeColor(_ color: UIColor) {
-        colorButton.backgroundColor = color
+        if (data.date != datePicker.date) {
+            data.date = datePicker.date
+            updateDateDescription()
+        }
     }
     
-    func changeDate(_ date: Date) {
+    private func updateDateDescription(){
         let baseStr = NSMutableAttributedString(string: habitDateDescriptionPattern,
                                                 attributes: [NSAttributedString.Key.font: getFontStyle(style: .Body)])
-        
         let formatter = DateFormatter()
         formatter.timeStyle = .short
-        
-        let dateStr = NSAttributedString(string: formatter.string(from: date),
+        let dateStr = NSAttributedString(string: formatter.string(from: data.date),
                                          attributes: [NSAttributedString.Key.font: getFontStyle(style: .Body),
                                                       NSAttributedString.Key.foregroundColor: getColorStyle(style: .Magenta)])
         baseStr.append(dateStr)
-        
         dateDescriptionLabel.attributedText = baseStr
     }
-        
-    func changeCheck() { }
+}
+
+extension HabitView: UIColorPickerViewControllerDelegate {
+    
+    func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
+        if (data.color != viewController.selectedColor) {
+            data.color = viewController.selectedColor
+            colorButton.backgroundColor = data.color
+        }
+    }
 }

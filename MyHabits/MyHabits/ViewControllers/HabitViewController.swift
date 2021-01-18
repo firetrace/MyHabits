@@ -49,11 +49,7 @@ class HabitViewController: UIViewController {
     }
 
     @objc private func save() {
-        guard let name = habitView.data.name, let date = habitView.data.date, let color = habitView.data.color else {
-            return
-        }
-        
-        HabitsStore.shared.habits.append(Habit(name: name, date: date, color: color))
+        HabitsStore.shared.habits.append(Habit(name: habitView.data.name, date: habitView.data.date, color: habitView.data.color))
         thisDelegate?.updateData()
         cancel()
     }
@@ -64,29 +60,8 @@ class HabitViewController: UIViewController {
 }
 
 extension HabitViewController: HabitProtocol {
-
-    func changeName(_ name: String) {
-        habitView.data.updateName(name)
-    }
     
-    func changeColor(_ color: UIColor) {
-        let picker = UIColorPickerViewController()
-        picker.selectedColor = color
-        picker.delegate = self
-        
-        self.present(picker, animated: true, completion: nil)
-    }
-    
-    func changeDate(_ date: Date) {
-        habitView.data.updateDate(date)
-    }
-    
-    func changeCheck() { }
-}
-
-extension HabitViewController: UIColorPickerViewControllerDelegate {
-    
-    func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
-        habitView.data.updateColor(viewController.selectedColor)
+    func presentController(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {
+        self.present(viewControllerToPresent, animated: flag, completion: completion)
     }
 }
