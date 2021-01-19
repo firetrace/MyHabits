@@ -17,30 +17,8 @@ class HabitCollectionViewCell: UICollectionViewCell {
             nameLabel.textColor = data?.color
             dateLabel.text = data?.dateString
             
-            if (data?.isAlreadyTakenToday != false) {
-                checkButton.backgroundColor = data?.color
-                checkButton.tintColor = .systemBackground
-                checkButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
-            }
-            else {
-                checkButton.layer.borderWidth = 3
-                checkButton.layer.borderColor = data?.color.cgColor
-            }
-            
-            var countConsecutiveDate = 0
-            if let sortedTrackDates = data?.trackDates.sorted(by: { $0.compare($1) == .orderedDescending }) {
-                for (index, date) in sortedTrackDates.enumerated() {
-                    if index + 1 < sortedTrackDates.count {
-                        if let days = Calendar.current.dateComponents([.day], from: date, to: sortedTrackDates[index + 1]).day, days > 1 {
-                            countConsecutiveDate += 1
-                        }
-                        else {
-                            break
-                        }
-                    }
-                }
-            }
-            descriptionLabel.text = "Подряд: \(countConsecutiveDate)"
+            updateCheckButton()
+            updateDescriptionLabel()
         }
     }
         
@@ -55,7 +33,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
     
     private lazy var dateLabel: UILabel = {
         var label = UILabel(frame: .zero)
-        label.font = getFontStyle(style: .Body)
+        label.font = getFontStyle(style: .Footnote2)
         label.textColor = getColorStyle(style: .LightGray)
         label.toAutoLayout()
         
@@ -64,7 +42,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
     
     private lazy var descriptionLabel: UILabel = {
         var label = UILabel(frame: .zero)
-        label.font = getFontStyle(style: .Body)
+        label.font = getFontStyle(style: .Footnote1)
         label.textColor = getColorStyle(style: .Gray)
         label.toAutoLayout()
         
@@ -74,7 +52,9 @@ class HabitCollectionViewCell: UICollectionViewCell {
     private lazy var checkButton: UIButton = {
         var button = UIButton(frame: .zero)
         button.addTarget(self, action: #selector(checkHabit), for: .touchUpInside)
+        button.tintColor = .systemBackground
         button.layer.cornerRadius = 18
+        button.layer.borderWidth = 3
         button.clipsToBounds = true
         button.toAutoLayout()
         
@@ -92,19 +72,47 @@ class HabitCollectionViewCell: UICollectionViewCell {
     }
     
     @objc private func checkHabit() {
-        guard let thisData = data else {
-            return
-        }
-        
-        if (thisData.isAlreadyTakenToday == false) {
-            checkButton.backgroundColor = data?.color
-            checkButton.tintColor = .systemBackground
-            checkButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
-            
+        if let thisData = data, thisData.isAlreadyTakenToday == false {
             HabitsStore.shared.track(thisData)
-            
             thisDelegate?.updateData()
         }
+    }
+    
+    private func updateCheckButton() {
+        if (data?.isAlreadyTakenToday != false) {
+            checkButton.backgroundColor = data?.color
+            checkButton.layer.borderColor = data?.color.cgColor
+            checkButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+        }
+        else {
+            checkButton.backgroundColor = nil
+            checkButton.layer.borderColor = data?.color.cgColor
+            checkButton.setImage(nil, for: .normal)
+        }
+    }
+    
+    private func updateDescriptionLabel() {
+        var countConsecutiveDate = 0
+        if let thisData = data {
+
+            let sortedTrackDates = thisData.trackDates.sorted(by: { $0.compare($1) == .orderedDescending })
+            for (index, date) in sortedTrackDates.enumerated() {
+                if index + 1 < sortedTrackDates.count {
+                    let currentDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date)
+                    let nextDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: sortedTrackDates[index + 1])
+                    
+                    if (currentDateComponents.year == nextDateComponents.year &&
+                        currentDateComponents.month == nextDateComponents.month &&
+                        (currentDateComponents.day ?? 0) - (nextDateComponents.day ?? 0) == 1) {
+                        countConsecutiveDate += 1
+                    }
+                    else {
+                        break
+                    }
+                }
+            }
+        }
+        descriptionLabel.text = "Подряд: \(countConsecutiveDate)"
     }
 }
 
@@ -124,7 +132,7 @@ extension HabitCollectionViewCell: ViewCellProtocol {
                 
         NSLayoutConstraint.activate([nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: topConst20),
                                      nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingConst20),
-                                     nameLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.6),
+                                     nameLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.7),
                                      
                                      dateLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: topConst4),
                                      dateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingConst20),
