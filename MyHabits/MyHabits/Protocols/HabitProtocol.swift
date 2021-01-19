@@ -8,5 +8,7 @@
 import UIKit
 
 protocol HabitProtocol: AnyObject {
+    func updateData()
     func presentController(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?)
+    func dismissController(animated: Bool, completion: (() -> Void)?)
 }

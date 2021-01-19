@@ -51,7 +51,7 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension ProgressCollectionViewCell: ViewCellProtocol {
+extension ProgressCollectionViewCell: CellProtocol {
     
     static var reuseId: String { String(describing: self) }
             

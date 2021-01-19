@@ -56,7 +56,7 @@ class HabitsViewController: UIViewController {
     }
     
     @objc private func add() {
-        let habitViewController = HabitViewController()
+        let habitViewController = HabitViewController(data: nil)
         habitViewController.thisDelegate = self
         navigationController?.present(habitViewController, animated: true, completion: nil)
     }
@@ -73,7 +73,7 @@ extension HabitsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if (indexPath.section == 0) {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProgressCollectionViewCell.reuseId, for: indexPath)
-            if let editCell = cell as? ViewCellProtocol {
+            if let editCell = cell as? CellProtocol {
                 editCell.updateCell(object: HabitsStore.shared.todayProgress as Any)
             }
             return cell
@@ -83,10 +83,18 @@ extension HabitsViewController: UICollectionViewDataSource {
             if let habitCell = cell as? HabitCollectionViewCell {
                 habitCell.thisDelegate = self
             }
-            if let editCell = cell as? ViewCellProtocol {
+            if let editCell = cell as? CellProtocol {
                 editCell.updateCell(object: HabitsStore.shared.habits[indexPath.item] as Any)
             }
             return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if (indexPath.section == 1) {            
+            let habitDetails = HabitDetailsViewController(item: indexPath.item)
+            habitDetails.thisDelegate = self
+            navigationController?.pushViewController(habitDetails, animated: true)
         }
     }
 }
@@ -125,9 +133,17 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension HabitsViewController: HabitsProtocol {
-    
+extension HabitsViewController: HabitProtocol {
+
     func updateData() {
         collectionView.reloadData()
+    }
+    
+    func presentController(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {
+        self.present(viewControllerToPresent, animated: flag, completion: completion)
+    }
+    
+    func dismissController(animated: Bool, completion: (() -> Void)?) {
+        self.dismiss(animated: animated, completion: completion)
     }
 }

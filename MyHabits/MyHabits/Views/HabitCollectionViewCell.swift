@@ -9,7 +9,7 @@ import UIKit
 
 class HabitCollectionViewCell: UICollectionViewCell {
     
-    weak var thisDelegate: HabitsProtocol?
+    weak var thisDelegate: HabitProtocol?
     
     private var data: Habit? {
         didSet {
@@ -116,10 +116,10 @@ class HabitCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension HabitCollectionViewCell: ViewCellProtocol {
+extension HabitCollectionViewCell: CellProtocol {
     
     static var reuseId: String { String(describing: self) }
-            
+    
     func layoutUpdate() {
         contentView.backgroundColor = .systemBackground
         contentView.layer.cornerRadius = 8

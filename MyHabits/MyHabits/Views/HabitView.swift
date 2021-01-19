@@ -11,7 +11,23 @@ class HabitView: UIView {
 
     weak var thisDelegate: HabitProtocol?
     
-    var data: Habit = Habit(name: "", date: Date(), color: getColorStyle(style: .Orange))
+    private var data: Habit? {
+        didSet {
+            nameText.text = data?.name
+            colorButton.backgroundColor = data?.color
+            datePicker.date = data?.date ?? Date()
+            
+            updateDateDescription()
+        }
+    }
+    
+    private var isEditMode: Bool = false {
+        didSet {
+            if (!isEditMode) {
+                delButton.removeFromSuperview()
+            }
+        }
+    }
             
     private lazy var nameLabel: UILabel = {
         var label = UILabel(frame: .zero)
@@ -77,19 +93,37 @@ class HabitView: UIView {
         return picker
     }()
     
+    private lazy var delButton: UIButton = {
+        var button = UIButton(frame: .zero)
+        button.addTarget(self, action: #selector(del), for: .touchUpInside)
+        button.setTitle("Удалить привычку", for: .normal)
+        button.titleLabel?.font = getFontStyle(style: .Body)
+        button.setTitleColor(.red, for: .normal)
+        button.toAutoLayout()
+        
+        return button
+    }()
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
-            
-        nameText.text = data.name
-        colorButton.backgroundColor = data.color
-        datePicker.date = data.date
-        updateDateDescription()
+        
         setupLayout()
     }
         
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func setData(data: Habit?) {
+        isEditMode = data != nil
+        if (data == nil) {
+            self.data = Habit(name: "", date: Date(), color: getColorStyle(style: .Orange))
+        } else {
+            self.data = data
+        }
+    }
+    
+    func getData() -> Habit? { data }
     
     private func setupLayout() {
         addSubview(nameLabel)
@@ -99,6 +133,7 @@ class HabitView: UIView {
         addSubview(dateLabel)
         addSubview(dateDescriptionLabel)
         addSubview(datePicker)
+        addSubview(delButton)
         
         let datePickerBottom = datePicker.bottomAnchor.constraint(equalTo: bottomAnchor)
         datePickerBottom.priority = .defaultLow
@@ -131,47 +166,68 @@ class HabitView: UIView {
                                      datePicker.topAnchor.constraint(equalTo: dateDescriptionLabel.bottomAnchor, constant: topConst15),
                                      datePicker.leadingAnchor.constraint(equalTo: leadingAnchor),
                                      datePicker.trailingAnchor.constraint(equalTo: trailingAnchor),
-                                     datePickerBottom])
+                                     datePickerBottom,
+                                                                          
+                                     delButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+                                     delButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: bottomConst8)])
     }
     
     @objc private func updateName(_ textField: UITextField) {
-        data.name = textField.text ?? ""
+        data?.name = textField.text ?? ""
     }
     
     @objc private func updateColor() {
         let picker = UIColorPickerViewController()
-        picker.selectedColor = data.color
+        picker.selectedColor = data?.color ?? getColorStyle(style: .Orange)
         picker.delegate = self
         
         thisDelegate?.presentController(picker, animated: true, completion: nil)
     }
     
     @objc private func updateDate(_ datePicker: UIDatePicker) {
-        if (data.date != datePicker.date) {
-            data.date = datePicker.date
+        if let thisData = data, thisData.date != datePicker.date {
+            thisData.date = datePicker.date
             updateDateDescription()
         }
     }
+
+    @objc private func del() {
+        let alert = UIAlertController(title: "Удалить привычку",
+                                      message: "Вы хотите удалить привычку \"\(String(describing: data?.name ?? ""))\"?",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Удалить", style: .destructive, handler: { (action) in
+            if let thisData = self.data, let index = HabitsStore.shared.habits.firstIndex(of: thisData) {
+                HabitsStore.shared.habits.remove(at: index)
+            }
+            self.thisDelegate?.dismissController(animated: true, completion: nil)
+        }))
+        
+        thisDelegate?.presentController(alert, animated: true, completion: nil)
+    }
     
     private func updateDateDescription(){
-        let baseStr = NSMutableAttributedString(string: habitDateDescriptionPattern,
-                                                attributes: [NSAttributedString.Key.font: getFontStyle(style: .Body)])
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        let dateStr = NSAttributedString(string: formatter.string(from: data.date),
-                                         attributes: [NSAttributedString.Key.font: getFontStyle(style: .Body),
-                                                      NSAttributedString.Key.foregroundColor: getColorStyle(style: .Magenta)])
-        baseStr.append(dateStr)
-        dateDescriptionLabel.attributedText = baseStr
+        if let thisData = data {
+            let baseStr = NSMutableAttributedString(string: habitDateDescriptionPattern,
+                                                    attributes: [NSAttributedString.Key.font: getFontStyle(style: .Body)])
+            let formatter = DateFormatter()
+            formatter.timeStyle = .short
+            
+            let dateStr = NSAttributedString(string: formatter.string(from: thisData.date),
+                                             attributes: [NSAttributedString.Key.font: getFontStyle(style: .Body),
+                                                          NSAttributedString.Key.foregroundColor: getColorStyle(style: .Magenta)])
+            baseStr.append(dateStr)
+            dateDescriptionLabel.attributedText = baseStr
+        }
     }
 }
 
 extension HabitView: UIColorPickerViewControllerDelegate {
     
     func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
-        if (data.color != viewController.selectedColor) {
-            data.color = viewController.selectedColor
-            colorButton.backgroundColor = data.color
+        if let thisData = data, thisData.color != viewController.selectedColor {
+            thisData.color = viewController.selectedColor
+            colorButton.backgroundColor = thisData.color
         }
     }
 }
