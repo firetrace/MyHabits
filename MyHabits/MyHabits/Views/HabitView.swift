@@ -33,6 +33,7 @@ class HabitView: UIView {
         var label = UILabel(frame: .zero)
         label.text = habitNameTitle
         label.font = getFontStyle(style: .Footnote1)
+        label.setContentHuggingPriority(.required, for: .vertical)
         label.toAutoLayout()
         
         return label
@@ -43,6 +44,7 @@ class HabitView: UIView {
         text.font = getFontStyle(style: .Body)
         text.placeholder = habitNamePlaceholder
         text.addTarget(self, action: #selector(updateName(_:)), for: .editingChanged)
+        text.setContentHuggingPriority(.required, for: .vertical)
         text.toAutoLayout()
         
         return text
@@ -53,6 +55,7 @@ class HabitView: UIView {
         label.text = habitColorTitle
         label.font = getFontStyle(style: .Footnote1)
         label.toAutoLayout()
+        label.setContentHuggingPriority(.required, for: .vertical)
         
         return label
     }()
@@ -62,6 +65,7 @@ class HabitView: UIView {
         button.addTarget(self, action: #selector(updateColor), for: .touchUpInside)
         button.layer.cornerRadius = 15
         button.clipsToBounds = true
+        button.setContentHuggingPriority(.required, for: .vertical)
         button.toAutoLayout()
         
         return button
@@ -71,6 +75,7 @@ class HabitView: UIView {
         var label = UILabel(frame: .zero)
         label.text = habitDateTitle
         label.font = getFontStyle(style: .Footnote1)
+        label.setContentHuggingPriority(.required, for: .vertical)
         label.toAutoLayout()
         
         return label
@@ -78,6 +83,7 @@ class HabitView: UIView {
     
     private lazy var dateDescriptionLabel: UILabel = {
         var label = UILabel(frame: .zero)
+        label.setContentHuggingPriority(.required, for: .vertical)
         label.toAutoLayout()
         
         return label
@@ -88,6 +94,7 @@ class HabitView: UIView {
         picker.preferredDatePickerStyle = .wheels
         picker.datePickerMode = .time
         picker.addTarget(self, action: #selector(updateDate(_:)), for: .valueChanged)
+        picker.setContentHuggingPriority(.required, for: .vertical)
         picker.toAutoLayout()
         
         return picker
@@ -99,6 +106,7 @@ class HabitView: UIView {
         button.setTitle("Удалить привычку", for: .normal)
         button.titleLabel?.font = getFontStyle(style: .Body)
         button.setTitleColor(.red, for: .normal)
+        button.setContentHuggingPriority(.required, for: .vertical)
         button.toAutoLayout()
         
         return button
@@ -108,6 +116,9 @@ class HabitView: UIView {
         super.init(frame: frame)
         
         setupLayout()
+        if (!isEditMode) {
+            nameText.becomeFirstResponder()
+        }
     }
         
     required init?(coder: NSCoder) {
@@ -116,11 +127,7 @@ class HabitView: UIView {
     
     func setData(data: Habit?) {
         isEditMode = data != nil
-        if (data == nil) {
-            self.data = Habit(name: "", date: Date(), color: getColorStyle(style: .Orange))
-        } else {
-            self.data = data
-        }
+        self.data = Habit(name: data?.name ?? "", date: data?.date ?? Date(), color: data?.color ?? getColorStyle(style: .Orange))
     }
     
     func getData() -> Habit? { data }
@@ -192,15 +199,16 @@ class HabitView: UIView {
     }
 
     @objc private func del() {
+        weak var weakSelf = self
         let alert = UIAlertController(title: "Удалить привычку",
                                       message: "Вы хотите удалить привычку \"\(String(describing: data?.name ?? ""))\"?",
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Удалить", style: .destructive, handler: { (action) in
-            if let thisData = self.data, let index = HabitsStore.shared.habits.firstIndex(of: thisData) {
+            if let thisData = weakSelf?.data, let index = HabitsStore.shared.habits.firstIndex(of: thisData) {
                 HabitsStore.shared.habits.remove(at: index)
             }
-            self.thisDelegate?.dismissController(animated: true, completion: nil)
+            weakSelf?.thisDelegate?.dismissController(animated: true, completion: nil)
         }))
         
         thisDelegate?.presentController(alert, animated: true, completion: nil)

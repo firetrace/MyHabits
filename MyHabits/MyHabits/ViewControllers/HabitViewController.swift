@@ -11,16 +11,19 @@ class HabitViewController: UIViewController {
     
     weak var thisDelegate: HabitProtocol?
 
+    private var dataIndex: Int?
     private var isEditMode: Bool = false
     
     private lazy var navigationBar: UINavigationBar = {
-        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 54))
-        
+        let navigationBar = UINavigationBar(frame: .zero)
+
         let navigationItem = UINavigationItem(title: isEditMode ? "Править" : "Создать")
+        navigationItem.largeTitleDisplayMode = .never
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(cancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(save))
         
         navigationBar.setItems([navigationItem], animated: false)
+        navigationBar.toAutoLayout()
         
         return navigationBar
     }()
@@ -33,11 +36,17 @@ class HabitViewController: UIViewController {
         return view;
     }();
     
-    convenience init(data: Habit?) {
+    convenience init(index: Int?) {
         self.init()
         
-        isEditMode = data != nil
-        habitView.setData(data: data)
+        isEditMode = index != nil
+        dataIndex = index
+        if let thisIndex = dataIndex {
+            habitView.setData(data: HabitsStore.shared.habits[thisIndex])
+        }
+        else {
+            habitView.setData(data: nil)
+        }
     }
         
     override func viewDidLoad() {
@@ -51,7 +60,13 @@ class HabitViewController: UIViewController {
         view.addSubview(navigationBar)
         view.addSubview(habitView)
         
-        NSLayoutConstraint.activate([habitView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
+        NSLayoutConstraint.activate([navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                                     navigationBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+                                     navigationBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+                                     navigationBar.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
+                                     navigationBar.heightAnchor.constraint(equalToConstant: 54),
+                                     
+                                     habitView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
                                      habitView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
                                      habitView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
                                      habitView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)])
@@ -59,7 +74,17 @@ class HabitViewController: UIViewController {
 
     @objc private func save() {
         if let data = habitView.getData() {
-            HabitsStore.shared.habits.append(Habit(name: data.name, date: data.date, color: data.color))
+            if (isEditMode) {
+                if let thisDataIndex = dataIndex {
+                    HabitsStore.shared.habits[thisDataIndex].name = data.name
+                    HabitsStore.shared.habits[thisDataIndex].date = data.date
+                    HabitsStore.shared.habits[thisDataIndex].color = data.color
+                    HabitsStore.shared.save()
+                }
+            }
+            else {
+                HabitsStore.shared.habits.append(Habit(name: data.name, date: data.date, color: data.color))
+            }
             thisDelegate?.updateData()
             cancel()
         }

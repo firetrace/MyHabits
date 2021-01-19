@@ -30,7 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().compactAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().prefersLargeTitles = true
-        UINavigationBar.appearance().tintColor = getColorStyle(style: .Magenta)
         
         UITabBar.appearance().tintColor = color
         

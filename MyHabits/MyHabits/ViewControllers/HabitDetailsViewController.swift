@@ -12,6 +12,7 @@ class HabitDetailsViewController: UIViewController {
     weak var thisDelegate: HabitProtocol?
     
     private var data: Habit?
+    private var dataIndex: Int?
     
     private lazy var editButton: UIBarButtonItem = {
         var button = UIBarButtonItem(title: "Править", style: .plain, target: self, action: #selector(edit))
@@ -24,15 +25,16 @@ class HabitDetailsViewController: UIViewController {
         var table = UITableView(frame: CGRect.zero, style: .grouped)
         table.dataSource = self
         table.register(HabitTableViewCell.self, forCellReuseIdentifier: HabitTableViewCell.reuseId)
-
         table.toAutoLayout()
         
         return table
     }();
         
-    convenience init(item: Int) {
+    convenience init(index: Int) {
         self.init()
-        data = HabitsStore.shared.habits[item]
+        
+        dataIndex = index
+        data = HabitsStore.shared.habits[index]
     }
 
     override func viewDidLoad() {
@@ -60,7 +62,7 @@ class HabitDetailsViewController: UIViewController {
     }
     
     @objc private func edit() {
-        let habitViewController = HabitViewController(data: data)
+        let habitViewController = HabitViewController(index: dataIndex)
         habitViewController.thisDelegate = self
         navigationController?.present(habitViewController, animated: true, completion: nil)
     }
@@ -68,7 +70,7 @@ class HabitDetailsViewController: UIViewController {
 
 extension HabitDetailsViewController: UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? { "АКТИВНОСТЬ" }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? { detailsTableHeader }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { HabitsStore.shared.dates.count }
     
@@ -76,7 +78,7 @@ extension HabitDetailsViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: HabitTableViewCell.reuseId, for: indexPath)
         
         if let editCell = cell as? CellProtocol, let thisData = data {
-            let date = HabitsStore.shared.dates[indexPath.row]
+            let date = HabitsStore.shared.dates.sorted(by: { $0.compare($1) == .orderedDescending })[indexPath.row]
             let isCheck = HabitsStore.shared.habit(thisData, isTrackedIn: date)
             
             editCell.updateCell(object: CellModel(date: date, isCheck: isCheck))

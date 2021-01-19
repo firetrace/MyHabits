@@ -86,7 +86,6 @@ class InfoView: UIView {
                                      textView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: topConst16),
                                      textView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingConst16),
                                      textView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingConst16),
-                                     textView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: bottomConst16)
-        ])
+                                     textView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: bottomConst16)])
     }
 }

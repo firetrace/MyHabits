@@ -83,3 +83,5 @@ let habitDateTitle = "ВРЕМЯ"
 let habitDateDescriptionPattern = "Каждый день в "
 
 let progressHeader = "Все получится!"
+
+let detailsTableHeader = "АКТИВНОСТЬ"

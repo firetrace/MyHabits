@@ -56,7 +56,7 @@ class HabitsViewController: UIViewController {
     }
     
     @objc private func add() {
-        let habitViewController = HabitViewController(data: nil)
+        let habitViewController = HabitViewController(index: nil)
         habitViewController.thisDelegate = self
         navigationController?.present(habitViewController, animated: true, completion: nil)
     }
@@ -92,7 +92,7 @@ extension HabitsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if (indexPath.section == 1) {            
-            let habitDetails = HabitDetailsViewController(item: indexPath.item)
+            let habitDetails = HabitDetailsViewController(index: indexPath.item)
             habitDetails.thisDelegate = self
             navigationController?.pushViewController(habitDetails, animated: true)
         }
