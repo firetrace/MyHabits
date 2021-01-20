@@ -16,7 +16,7 @@ class HabitViewController: UIViewController {
     private lazy var navigationBar: UINavigationBar = {
         let navigationBar = UINavigationBar(frame: .zero)
 
-        let navigationItem = UINavigationItem(title: isNew ? "Править" : "Создать")
+        let navigationItem = UINavigationItem(title: isNew ? "Создать" : "Править")
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(cancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(save))
