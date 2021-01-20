@@ -29,6 +29,7 @@
 		849E582625B6D1E30065A998 /* HabitDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E582525B6D1E30065A998 /* HabitDetailsViewController.swift */; };
 		849E582D25B6ED4E0065A998 /* HabitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E582C25B6ED4E0065A998 /* HabitTableViewCell.swift */; };
 		849E583125B6FD730065A998 /* CellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E583025B6FD730065A998 /* CellModel.swift */; };
+		849E583625B8073A0065A998 /* HabitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E583525B8073A0065A998 /* HabitModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		849E582525B6D1E30065A998 /* HabitDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailsViewController.swift; sourceTree = "<group>"; };
 		849E582C25B6ED4E0065A998 /* HabitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTableViewCell.swift; sourceTree = "<group>"; };
 		849E583025B6FD730065A998 /* CellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellModel.swift; sourceTree = "<group>"; };
+		849E583525B8073A0065A998 /* HabitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 			children = (
 				45DC50A025B043B500A6F692 /* InfoModel.swift */,
 				849E583025B6FD730065A998 /* CellModel.swift */,
+				849E583525B8073A0065A998 /* HabitModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 				45DC509825B033B700A6F692 /* InfoView.swift in Sources */,
 				45966FF9258CEAD0007A3B5A /* NavigationViewController.swift in Sources */,
 				454CBFC6258C906400D2CD16 /* HabitsStore.swift in Sources */,
+				849E583625B8073A0065A998 /* HabitModel.swift in Sources */,
 				45966FEC258CE25A007A3B5A /* HabitsViewController.swift in Sources */,
 				849E582625B6D1E30065A998 /* HabitDetailsViewController.swift in Sources */,
 				454CBFB0258C8C8D00D2CD16 /* AppDelegate.swift in Sources */,
@@ -383,7 +387,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3J2DF3TR3Q;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = MyHabits/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -403,7 +407,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3J2DF3TR3Q;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = MyHabits/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (

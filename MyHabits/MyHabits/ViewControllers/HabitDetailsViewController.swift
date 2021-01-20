@@ -11,8 +11,7 @@ class HabitDetailsViewController: UIViewController {
 
     weak var thisDelegate: HabitProtocol?
     
-    private var data: Habit?
-    private var dataIndex: Int?
+    private var data: HabitModel = HabitModel()
     
     private lazy var editButton: UIBarButtonItem = {
         var button = UIBarButtonItem(title: "Править", style: .plain, target: self, action: #selector(edit))
@@ -30,17 +29,15 @@ class HabitDetailsViewController: UIViewController {
         return table
     }();
         
-    convenience init(index: Int) {
+    convenience init(data: HabitModel) {
         self.init()
-        
-        dataIndex = index
-        data = HabitsStore.shared.habits[index]
+        self.data = data
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = data?.name
+        title = data.name
         view.backgroundColor = .systemBackground
         setupLayout()
     }
@@ -62,7 +59,7 @@ class HabitDetailsViewController: UIViewController {
     }
     
     @objc private func edit() {
-        let habitViewController = HabitViewController(index: dataIndex)
+        let habitViewController = HabitViewController(data: data)
         habitViewController.thisDelegate = self
         navigationController?.present(habitViewController, animated: true, completion: nil)
     }
@@ -76,10 +73,11 @@ extension HabitDetailsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: HabitTableViewCell.reuseId, for: indexPath)
-        
-        if let editCell = cell as? CellProtocol, let thisData = data {
+        if let editCell = cell as? CellProtocol, let indexData = data.id {
+            let habit = HabitsStore.shared.habits[indexData]
+            
             let date = HabitsStore.shared.dates.sorted(by: { $0.compare($1) == .orderedDescending })[indexPath.row]
-            let isCheck = HabitsStore.shared.habit(thisData, isTrackedIn: date)
+            let isCheck = HabitsStore.shared.habit(habit, isTrackedIn: date)
             
             editCell.updateCell(object: CellModel(date: date, isCheck: isCheck))
         }

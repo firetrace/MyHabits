@@ -2,62 +2,45 @@
 //  HabitModel.swift
 //  MyHabits
 //
-//  Created by Александр Глазков on 14.01.2021.
+//  Created by Admin on 20.01.2021.
 //
 
 import UIKit
 
 struct HabitModel {
     
-    weak var delegate: HabitProtocol?
+    let id: Int?
+    var name: String
+    var date: Date
+    var color: UIColor
     
-    private(set) var name: String? {
-        didSet {
-            if let thisName = name {
-                //delegate?.changeName(thisName)
-            }
-        }
-    }
-    private(set) var date: Date? {
-        didSet {
-            if let thisDate = date {
-                //delegate?.changeDate(thisDate)
-            }
-        }
-    }
-    private(set) var color: UIColor? {
-        didSet {
-            if let thisColor = color {
-                //delegate?.changeColor(thisColor)
-            }
-        }
-    }
-    private(set) var dateCheck: Date? {
-        didSet {
-            //delegate?.changeCheck()
-        }
-    }
-    
+    var isNew: Bool { get { id == nil }}
+
     init() {
-        self.name = nil
-        self.date = nil
-        self.color = nil
-        self.dateCheck = nil
+        self.id = nil
+        self.name = ""
+        self.date = Date()
+        self.color = getColorStyle(style: .Orange)
     }
-        
-    mutating func updateName(_ name: String?) {
+    
+    init(name: String, date: Date, color: UIColor) {
+        self.id = nil
         self.name = name
-    }
-    
-    mutating func updateDate(_ date: Date?) {
         self.date = date
-    }
-    
-    mutating func updateColor(_ color: UIColor?) {
         self.color = color
     }
     
-    mutating func updateDateCheck(_ date: Date?) {
-        self.dateCheck = date
+    init(id: Int, name: String, date: Date, color: UIColor) {
+        self.id = id
+        self.name = name
+        self.date = date
+        self.color = color
+    }
+    
+    func getHabit() -> Habit? {
+        guard let index = id else {
+            return nil
+        }
+        return HabitsStore.shared.habits[index]
     }
 }

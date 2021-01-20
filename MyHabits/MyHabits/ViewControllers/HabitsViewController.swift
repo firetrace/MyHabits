@@ -56,7 +56,7 @@ class HabitsViewController: UIViewController {
     }
     
     @objc private func add() {
-        let habitViewController = HabitViewController(index: nil)
+        let habitViewController = HabitViewController(data: HabitModel())
         habitViewController.thisDelegate = self
         navigationController?.present(habitViewController, animated: true, completion: nil)
     }
@@ -84,15 +84,17 @@ extension HabitsViewController: UICollectionViewDataSource {
                 habitCell.thisDelegate = self
             }
             if let editCell = cell as? CellProtocol {
-                editCell.updateCell(object: HabitsStore.shared.habits[indexPath.item] as Any)
+                let habit = HabitsStore.shared.habits[indexPath.item]
+                editCell.updateCell(object: HabitModel(id: indexPath.item, name: habit.name, date: habit.date, color: habit.color)  as Any)
             }
             return cell
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if (indexPath.section == 1) {            
-            let habitDetails = HabitDetailsViewController(index: indexPath.item)
+        if (indexPath.section == 1) {
+            let habit = HabitsStore.shared.habits[indexPath.item]
+            let habitDetails = HabitDetailsViewController(data: HabitModel(id: indexPath.item, name: habit.name, date: habit.date, color: habit.color))
             habitDetails.thisDelegate = self
             navigationController?.pushViewController(habitDetails, animated: true)
         }

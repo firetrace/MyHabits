@@ -11,24 +11,22 @@ class HabitView: UIView {
 
     weak var thisDelegate: HabitProtocol?
     
-    private var data: Habit? {
+    var data: HabitModel = HabitModel()
+    {
         didSet {
-            nameText.text = data?.name
-            colorButton.backgroundColor = data?.color
-            datePicker.date = data?.date ?? Date()
+            nameText.text = data.name
+            colorButton.backgroundColor = data.color
+            datePicker.date = data.date
             
             updateDateDescription()
-        }
-    }
-    
-    private var isEditMode: Bool = false {
-        didSet {
-            if (!isEditMode) {
+            
+            if (data.isNew) {
+                nameText.becomeFirstResponder()
                 delButton.removeFromSuperview()
             }
         }
     }
-            
+                
     private lazy var nameLabel: UILabel = {
         var label = UILabel(frame: .zero)
         label.text = habitNameTitle
@@ -111,27 +109,16 @@ class HabitView: UIView {
         
         return button
     }()
-        
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        setupLayout()
-        if (!isEditMode) {
-            nameText.becomeFirstResponder()
-        }
+        self.setupLayout()
     }
         
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func setData(data: Habit?) {
-        isEditMode = data != nil
-        self.data = Habit(name: data?.name ?? "", date: data?.date ?? Date(), color: data?.color ?? getColorStyle(style: .Orange))
-    }
-    
-    func getData() -> Habit? { data }
-    
+        
     private func setupLayout() {
         addSubview(nameLabel)
         addSubview(nameText)
@@ -180,20 +167,20 @@ class HabitView: UIView {
     }
     
     @objc private func updateName(_ textField: UITextField) {
-        data?.name = textField.text ?? ""
+        data.name = textField.text ?? ""
     }
     
     @objc private func updateColor() {
         let picker = UIColorPickerViewController()
-        picker.selectedColor = data?.color ?? getColorStyle(style: .Orange)
+        picker.selectedColor = data.color
         picker.delegate = self
         
         thisDelegate?.presentController(picker, animated: true, completion: nil)
     }
     
     @objc private func updateDate(_ datePicker: UIDatePicker) {
-        if let thisData = data, thisData.date != datePicker.date {
-            thisData.date = datePicker.date
+        if data.date != datePicker.date {
+            data.date = datePicker.date
             updateDateDescription()
         }
     }
@@ -201,13 +188,11 @@ class HabitView: UIView {
     @objc private func del() {
         weak var weakSelf = self
         let alert = UIAlertController(title: "Удалить привычку",
-                                      message: "Вы хотите удалить привычку \"\(String(describing: data?.name ?? ""))\"?",
+                                      message: "Вы хотите удалить привычку \"\(String(describing: data.name))\"?",
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Удалить", style: .destructive, handler: { (action) in
-            if let thisData = weakSelf?.data, let index = HabitsStore.shared.habits.firstIndex(of: thisData) {
-                HabitsStore.shared.habits.remove(at: index)
-            }
+            if let index = weakSelf?.data.id { HabitsStore.shared.habits.remove(at: index) }
             weakSelf?.thisDelegate?.dismissController(animated: true, completion: nil)
         }))
         
@@ -215,27 +200,25 @@ class HabitView: UIView {
     }
     
     private func updateDateDescription(){
-        if let thisData = data {
-            let baseStr = NSMutableAttributedString(string: habitDateDescriptionPattern,
-                                                    attributes: [NSAttributedString.Key.font: getFontStyle(style: .Body)])
-            let formatter = DateFormatter()
-            formatter.timeStyle = .short
+        let baseStr = NSMutableAttributedString(string: habitDateDescriptionPattern,
+                                                attributes: [NSAttributedString.Key.font: getFontStyle(style: .Body)])
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
             
-            let dateStr = NSAttributedString(string: formatter.string(from: thisData.date),
-                                             attributes: [NSAttributedString.Key.font: getFontStyle(style: .Body),
-                                                          NSAttributedString.Key.foregroundColor: getColorStyle(style: .Magenta)])
-            baseStr.append(dateStr)
-            dateDescriptionLabel.attributedText = baseStr
-        }
+        let dateStr = NSAttributedString(string: formatter.string(from: data.date),
+                                         attributes: [NSAttributedString.Key.font: getFontStyle(style: .Body),
+                                                      NSAttributedString.Key.foregroundColor: getColorStyle(style: .Magenta)])
+        baseStr.append(dateStr)
+        dateDescriptionLabel.attributedText = baseStr
     }
 }
 
 extension HabitView: UIColorPickerViewControllerDelegate {
     
     func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
-        if let thisData = data, thisData.color != viewController.selectedColor {
-            thisData.color = viewController.selectedColor
-            colorButton.backgroundColor = thisData.color
+        if data.color != viewController.selectedColor {
+            data.color = viewController.selectedColor
+            colorButton.backgroundColor = data.color
         }
     }
 }

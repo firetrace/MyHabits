@@ -8,6 +8,7 @@
 import UIKit
 
 struct CellModel {
+
     let date: Date
     let isCheck: Bool
     

@@ -11,14 +11,17 @@ class HabitCollectionViewCell: UICollectionViewCell {
     
     weak var thisDelegate: HabitProtocol?
     
-    private var data: Habit? {
+    private var data: HabitModel = HabitModel()
+    {
         didSet {
-            nameLabel.text = data?.name
-            nameLabel.textColor = data?.color
-            dateLabel.text = data?.dateString
-            
-            updateCheckButton()
-            updateDescriptionLabel()
+            nameLabel.text = data.name
+            nameLabel.textColor = data.color
+            if let habit = data.getHabit() {
+                dateLabel.text = habit.dateString
+                
+                updateCheckButton(habit: habit)
+                updateDescriptionLabel(habit: habit)
+            }
         }
     }
         
@@ -72,44 +75,40 @@ class HabitCollectionViewCell: UICollectionViewCell {
     }
     
     @objc private func checkHabit() {
-        if let thisData = data, thisData.isAlreadyTakenToday == false {
-            HabitsStore.shared.track(thisData)
+        if let habit = data.getHabit(), habit.isAlreadyTakenToday == false {
+            HabitsStore.shared.track(habit)
             thisDelegate?.updateData()
         }
     }
     
-    private func updateCheckButton() {
-        if (data?.isAlreadyTakenToday != false) {
-            checkButton.backgroundColor = data?.color
-            checkButton.layer.borderColor = data?.color.cgColor
+    private func updateCheckButton(habit: Habit) {
+        if (habit.isAlreadyTakenToday != false) {
+            checkButton.backgroundColor = habit.color
+            checkButton.layer.borderColor = habit.color.cgColor
             checkButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
         }
         else {
             checkButton.backgroundColor = nil
-            checkButton.layer.borderColor = data?.color.cgColor
+            checkButton.layer.borderColor = habit.color.cgColor
             checkButton.setImage(nil, for: .normal)
         }
     }
     
-    private func updateDescriptionLabel() {
+    private func updateDescriptionLabel(habit: Habit) {
         var countConsecutiveDate = 0
-        if let thisData = data {
-
-            let sortedTrackDates = thisData.trackDates.sorted(by: { $0.compare($1) == .orderedDescending })
-            for (index, date) in sortedTrackDates.enumerated() {
-                if index + 1 < sortedTrackDates.count {
-                    let currentDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date)
-                    let nextDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: sortedTrackDates[index + 1])
+        
+        let sortedTrackDates = habit.trackDates.sorted(by: { $0.compare($1) == .orderedDescending })
+        for (index, date) in sortedTrackDates.enumerated() {
+            if index + 1 < sortedTrackDates.count {
+                let currentDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date)
+                let nextDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: sortedTrackDates[index + 1])
                     
-                    if (currentDateComponents.year == nextDateComponents.year &&
+                if (currentDateComponents.year == nextDateComponents.year &&
                         currentDateComponents.month == nextDateComponents.month &&
                         (currentDateComponents.day ?? 0) - (nextDateComponents.day ?? 0) == 1) {
                         countConsecutiveDate += 1
-                    }
-                    else {
-                        break
-                    }
                 }
+                else { break }
             }
         }
         descriptionLabel.text = "Подряд: \(countConsecutiveDate)"
@@ -149,8 +148,8 @@ extension HabitCollectionViewCell: CellProtocol {
     }
     
     func updateCell(object: Any) {
-        if let habit = object as? Habit {
-            self.data = habit
+        if let model = object as? HabitModel {
+            self.data = model
         }
     }
 }

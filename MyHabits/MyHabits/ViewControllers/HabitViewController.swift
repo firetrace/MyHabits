@@ -10,14 +10,13 @@ import UIKit
 class HabitViewController: UIViewController {
     
     weak var thisDelegate: HabitProtocol?
-
-    private var dataIndex: Int?
-    private var isEditMode: Bool = false
+    
+    private var isNew: Bool { get { habitView.data.isNew } }
     
     private lazy var navigationBar: UINavigationBar = {
         let navigationBar = UINavigationBar(frame: .zero)
 
-        let navigationItem = UINavigationItem(title: isEditMode ? "Править" : "Создать")
+        let navigationItem = UINavigationItem(title: isNew ? "Править" : "Создать")
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(cancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(save))
@@ -36,17 +35,9 @@ class HabitViewController: UIViewController {
         return view;
     }();
     
-    convenience init(index: Int?) {
+    convenience init(data: HabitModel) {
         self.init()
-        
-        isEditMode = index != nil
-        dataIndex = index
-        if let thisIndex = dataIndex {
-            habitView.setData(data: HabitsStore.shared.habits[thisIndex])
-        }
-        else {
-            habitView.setData(data: nil)
-        }
+        self.habitView.data = data
     }
         
     override func viewDidLoad() {
@@ -73,21 +64,19 @@ class HabitViewController: UIViewController {
     }
 
     @objc private func save() {
-        if let data = habitView.getData() {
-            if (isEditMode) {
-                if let thisDataIndex = dataIndex {
-                    HabitsStore.shared.habits[thisDataIndex].name = data.name
-                    HabitsStore.shared.habits[thisDataIndex].date = data.date
-                    HabitsStore.shared.habits[thisDataIndex].color = data.color
-                    HabitsStore.shared.save()
-                }
+        if (isNew == false) {
+            if let habit = habitView.data.getHabit() {
+
+                habit.name = habitView.data.name
+                habit.date = habitView.data.date
+                habit.color = habitView.data.color
+                
+                HabitsStore.shared.save()
             }
-            else {
-                HabitsStore.shared.habits.append(Habit(name: data.name, date: data.date, color: data.color))
-            }
-            thisDelegate?.updateData()
-            cancel()
-        }
+        } else { HabitsStore.shared.habits.append(Habit(name: habitView.data.name, date: habitView.data.date, color: habitView.data.color)) }
+        
+        thisDelegate?.updateData()
+        cancel()
     }
     
     @objc private func cancel() {
