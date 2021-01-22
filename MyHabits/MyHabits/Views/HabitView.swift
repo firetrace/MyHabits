@@ -31,7 +31,6 @@ class HabitView: UIView {
         var label = UILabel(frame: .zero)
         label.text = habitNameTitle
         label.font = getFontStyle(style: .Footnote1)
-        label.setContentHuggingPriority(.required, for: .vertical)
         label.toAutoLayout()
         
         return label
@@ -42,7 +41,6 @@ class HabitView: UIView {
         text.font = getFontStyle(style: .Body)
         text.placeholder = habitNamePlaceholder
         text.addTarget(self, action: #selector(updateName(_:)), for: .editingChanged)
-        text.setContentHuggingPriority(.required, for: .vertical)
         text.toAutoLayout()
         
         return text
@@ -53,7 +51,6 @@ class HabitView: UIView {
         label.text = habitColorTitle
         label.font = getFontStyle(style: .Footnote1)
         label.toAutoLayout()
-        label.setContentHuggingPriority(.required, for: .vertical)
         
         return label
     }()
@@ -63,7 +60,6 @@ class HabitView: UIView {
         button.addTarget(self, action: #selector(updateColor), for: .touchUpInside)
         button.layer.cornerRadius = 15
         button.clipsToBounds = true
-        button.setContentHuggingPriority(.required, for: .vertical)
         button.toAutoLayout()
         
         return button
@@ -73,7 +69,6 @@ class HabitView: UIView {
         var label = UILabel(frame: .zero)
         label.text = habitDateTitle
         label.font = getFontStyle(style: .Footnote1)
-        label.setContentHuggingPriority(.required, for: .vertical)
         label.toAutoLayout()
         
         return label
@@ -81,7 +76,6 @@ class HabitView: UIView {
     
     private lazy var dateDescriptionLabel: UILabel = {
         var label = UILabel(frame: .zero)
-        label.setContentHuggingPriority(.required, for: .vertical)
         label.toAutoLayout()
         
         return label
@@ -92,7 +86,6 @@ class HabitView: UIView {
         picker.preferredDatePickerStyle = .wheels
         picker.datePickerMode = .time
         picker.addTarget(self, action: #selector(updateDate(_:)), for: .valueChanged)
-        picker.setContentHuggingPriority(.required, for: .vertical)
         picker.toAutoLayout()
         
         return picker
@@ -104,7 +97,6 @@ class HabitView: UIView {
         button.setTitle("Удалить привычку", for: .normal)
         button.titleLabel?.font = getFontStyle(style: .Body)
         button.setTitleColor(.red, for: .normal)
-        button.setContentHuggingPriority(.required, for: .vertical)
         button.toAutoLayout()
         
         return button
@@ -128,9 +120,6 @@ class HabitView: UIView {
         addSubview(dateDescriptionLabel)
         addSubview(datePicker)
         addSubview(delButton)
-        
-        let datePickerBottom = datePicker.bottomAnchor.constraint(equalTo: bottomAnchor)
-        datePickerBottom.priority = .defaultLow
         
         NSLayoutConstraint.activate([nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: topConst22),
                                      nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadingConst16),
@@ -160,8 +149,7 @@ class HabitView: UIView {
                                      datePicker.topAnchor.constraint(equalTo: dateDescriptionLabel.bottomAnchor, constant: topConst15),
                                      datePicker.leadingAnchor.constraint(equalTo: leadingAnchor),
                                      datePicker.trailingAnchor.constraint(equalTo: trailingAnchor),
-                                     datePickerBottom,
-                                                                          
+
                                      delButton.centerXAnchor.constraint(equalTo: centerXAnchor),
                                      delButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: bottomConst8)])
     }

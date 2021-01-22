@@ -45,6 +45,11 @@ extension HabitTableViewCell: CellProtocol {
         contentView.addSubview(dateLabel)
         contentView.addSubview(checkImage)
         
+        let checkImageWidth = checkImage.widthAnchor.constraint(lessThanOrEqualToConstant: 20)
+        checkImageWidth.priority = .defaultLow        
+        let checkImageHeight = checkImage.heightAnchor.constraint(lessThanOrEqualToConstant: 20)
+        checkImageHeight.priority = .defaultLow
+        
         NSLayoutConstraint.activate([dateLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: topConst16),
                                      dateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingConst16),
                                      dateLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: bottomConst16),
@@ -52,7 +57,9 @@ extension HabitTableViewCell: CellProtocol {
                                      
                                      checkImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: topConst16),
                                      checkImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: trailingConst16),
-                                     checkImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: bottomConst16)])
+                                     checkImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: bottomConst16),
+                                     checkImageHeight,
+                                     checkImageWidth])
     }
     
     func updateCell(object: Any) {
@@ -73,7 +80,8 @@ extension HabitTableViewCell: CellProtocol {
                 } else {
                     
                     let formatter = DateFormatter()
-                    formatter.timeStyle = .medium
+                    formatter.dateStyle = .short
+                    formatter.timeStyle = .short
                     
                     dateStr = formatter.string(from: model.date)
                 }

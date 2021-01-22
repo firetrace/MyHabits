@@ -18,9 +18,9 @@ class HabitViewController: UIViewController {
 
         let navigationItem = UINavigationItem(title: isNew ? "Создать" : "Править")
         navigationItem.largeTitleDisplayMode = .never
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(cancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(save))
-        
         navigationBar.setItems([navigationItem], animated: false)
         navigationBar.toAutoLayout()
         
@@ -55,7 +55,6 @@ class HabitViewController: UIViewController {
                                      navigationBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
                                      navigationBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
                                      navigationBar.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
-                                     navigationBar.heightAnchor.constraint(equalToConstant: 54),
                                      
                                      habitView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
                                      habitView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
