@@ -11,7 +11,7 @@ class HabitTableViewCell: UITableViewCell {
     
     private lazy var dateLabel: UILabel = {
         var label = UILabel(frame: .zero)
-        label.font = getFontStyle(style: .Body)
+        label.font = getFontStyle(style: .body)
         label.toAutoLayout()
         
         return label
@@ -19,7 +19,7 @@ class HabitTableViewCell: UITableViewCell {
     
     private lazy var checkImage: UIImageView = {
         var image = UIImageView()
-        image.tintColor = getColorStyle(style: .Magenta)
+        image.tintColor = getColorStyle(style: .magenta)
         image.contentMode = .scaleAspectFit
         image.toAutoLayout()
         
@@ -37,6 +37,7 @@ class HabitTableViewCell: UITableViewCell {
 }
 
 extension HabitTableViewCell: CellProtocol {
+    typealias CellType = HabitModel
     
     static var reuseId: String { String(describing: self) }
     
@@ -62,35 +63,34 @@ extension HabitTableViewCell: CellProtocol {
                                      checkImageWidth])
     }
     
-    func updateCell(object: Any) {
-        if let model = object as? CellModel {
-            var dateStr: String
-            if (Calendar.current.isDateInToday(model.date)) {
-                dateStr = "Сегодня"
-            } else if (Calendar.current.isDateInYesterday(model.date)) {
-                dateStr = "Вчера"
-            } else {
-                let currentDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: Date())
-                let inDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: model.date)
+    func updateCell(object: HabitModel) {
+        guard let habit = object.getHabit(),
+              let date = HabitsStore.shared.dates.sorted(by: { $0.compare($1) == .orderedDescending }).first else {
+            return
+        }
+        
+        let isCheck = HabitsStore.shared.habit(habit, isTrackedIn: date)
+        
+        var dateStr: String?
+        if (Calendar.current.isDateInToday(date)) { dateStr = "Сегодня" }
+        else if (Calendar.current.isDateInYesterday(date)) { dateStr = "Вчера" }
+        else {
+            let currentDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: Date())
+            let inDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date)
                 
-                if (currentDateComponents.year == inDateComponents.year &&
-                    currentDateComponents.month == inDateComponents.month &&
-                    (currentDateComponents.day ?? 0) - (inDateComponents.day ?? 0) == 2) {
-                    dateStr = "Позавчера"
-                } else {
-                    
-                    let formatter = DateFormatter()
-                    formatter.dateStyle = .short
-                    formatter.timeStyle = .short
-                    
-                    dateStr = formatter.string(from: model.date)
+            if (currentDateComponents.year == inDateComponents.year &&
+                currentDateComponents.month == inDateComponents.month &&
+                (currentDateComponents.day ?? 0) - (inDateComponents.day ?? 0) == 2) { dateStr = "Позавчера" }
+            else {
+                if let indexDate = HabitsStore.shared.dates.lastIndex(of: date) {
+                    dateStr = HabitsStore.shared.trackDateString(forIndex: indexDate)
                 }
             }
-            
-            dateLabel.text = dateStr
-            if (model.isCheck) {
-                checkImage.image = UIImage(systemName: "checkmark")
-            }
+        }
+        
+        dateLabel.text = dateStr
+        if (isCheck) {
+            checkImage.image = UIImage(systemName: "checkmark")
         }
     }
 }

@@ -11,7 +11,7 @@ class HabitsViewController: UIViewController {
 
     private lazy var addButton: UIBarButtonItem = {
         var button = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(add))
-        button.tintColor = getColorStyle(style: .Magenta)
+        button.tintColor = getColorStyle(style: .magenta)
             
         return button
     }()
@@ -19,7 +19,7 @@ class HabitsViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
         var layout = UICollectionViewFlowLayout()
         var view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.backgroundColor = getColorStyle(style: .White)        
+        view.backgroundColor = getColorStyle(style: .white)        
         view.alwaysBounceVertical = true
         view.dataSource = self
         view.delegate = self
@@ -58,7 +58,9 @@ class HabitsViewController: UIViewController {
     @objc private func add() {
         let habitViewController = HabitViewController(data: HabitModel())
         habitViewController.thisDelegate = self
-        navigationController?.present(habitViewController, animated: true, completion: nil)
+        let habitNavigationViewController = UINavigationController(rootViewController: habitViewController)
+        
+        navigationController?.present(habitNavigationViewController, animated: true, completion: nil)
     }
 }
 
@@ -73,19 +75,17 @@ extension HabitsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if (indexPath.section == 0) {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProgressCollectionViewCell.reuseId, for: indexPath)
-            if let editCell = cell as? CellProtocol {
-                editCell.updateCell(object: HabitsStore.shared.todayProgress as Any)
+            if let editCell = cell as? ProgressCollectionViewCell {
+                editCell.updateCell(object: HabitsStore.shared.todayProgress)
             }
             return cell
         }
         else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HabitCollectionViewCell.reuseId, for: indexPath)
-            if let habitCell = cell as? HabitCollectionViewCell {
-                habitCell.thisDelegate = self
-            }
-            if let editCell = cell as? CellProtocol {
+            if let editCell = cell as? HabitCollectionViewCell {
+                editCell.thisDelegate = self
                 let habit = HabitsStore.shared.habits[indexPath.item]
-                editCell.updateCell(object: HabitModel(id: indexPath.item, name: habit.name, date: habit.date, color: habit.color)  as Any)
+                editCell.updateCell(object: HabitModel(id: indexPath.item, name: habit.name, date: habit.date, color: habit.color))
             }
             return cell
         }

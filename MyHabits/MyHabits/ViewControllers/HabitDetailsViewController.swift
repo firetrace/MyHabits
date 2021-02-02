@@ -15,7 +15,7 @@ class HabitDetailsViewController: UIViewController {
     
     private lazy var editButton: UIBarButtonItem = {
         var button = UIBarButtonItem(title: "Править", style: .plain, target: self, action: #selector(edit))
-        button.tintColor = getColorStyle(style: .Magenta)
+        button.tintColor = getColorStyle(style: .magenta)
             
         return button
     }()
@@ -27,13 +27,13 @@ class HabitDetailsViewController: UIViewController {
         table.toAutoLayout()
         
         return table
-    }();
-        
+    }()
+
     convenience init(data: HabitModel) {
         self.init()
         self.data = data
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,11 +57,13 @@ class HabitDetailsViewController: UIViewController {
                                      tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
                                      tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)])
     }
-    
+        
     @objc private func edit() {
         let habitViewController = HabitViewController(data: data)
         habitViewController.thisDelegate = self
-        navigationController?.present(habitViewController, animated: true, completion: nil)
+        let habitNavigationViewController = UINavigationController(rootViewController: habitViewController)
+        
+        navigationController?.present(habitNavigationViewController, animated: true, completion: nil)
     }
 }
 
@@ -73,15 +75,10 @@ extension HabitDetailsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: HabitTableViewCell.reuseId, for: indexPath)
-        if let editCell = cell as? CellProtocol, let indexData = data.id {
-            let habit = HabitsStore.shared.habits[indexData]
-            
-            let date = HabitsStore.shared.dates.sorted(by: { $0.compare($1) == .orderedDescending })[indexPath.row]
-            let isCheck = HabitsStore.shared.habit(habit, isTrackedIn: date)
-            
-            editCell.updateCell(object: CellModel(date: date, isCheck: isCheck))
-        }
-        
+        if let editCell = cell as? HabitTableViewCell, let index = data.id {
+            let habit = HabitsStore.shared.habits[index]
+            editCell.updateCell(object: HabitModel(id: index, name: habit.name, date: habit.date, color: habit.color))
+        }        
         return cell
     }
 }
@@ -89,6 +86,9 @@ extension HabitDetailsViewController: UITableViewDataSource {
 extension HabitDetailsViewController: HabitProtocol {
 
     func updateData() {
+        data.updateData()
+        title = data.name
+        
         thisDelegate?.updateData()
     }
     
@@ -97,7 +97,7 @@ extension HabitDetailsViewController: HabitProtocol {
     }
     
     func dismissController(animated: Bool, completion: (() -> Void)?) {
-        updateData()
+        thisDelegate?.updateData()
         navigationController?.popViewController(animated: true)
     }
 }

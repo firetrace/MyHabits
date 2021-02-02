@@ -6,8 +6,10 @@
 //
 
 protocol CellProtocol {
+    associatedtype CellType
+    
     static var reuseId: String { get }
     
     func layoutUpdate()
-    func updateCell(object: Any)
+    func updateCell(object: CellType)
 }

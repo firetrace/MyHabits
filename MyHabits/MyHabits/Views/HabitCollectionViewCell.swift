@@ -28,7 +28,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
     private lazy var nameLabel: UILabel = {
         var label = UILabel(frame: .zero)
         label.numberOfLines = 2
-        label.font = getFontStyle(style: .Headline)
+        label.font = getFontStyle(style: .headline)
         label.toAutoLayout()
         
         return label
@@ -36,8 +36,8 @@ class HabitCollectionViewCell: UICollectionViewCell {
     
     private lazy var dateLabel: UILabel = {
         var label = UILabel(frame: .zero)
-        label.font = getFontStyle(style: .Footnote2)
-        label.textColor = getColorStyle(style: .LightGray)
+        label.font = getFontStyle(style: .footnote2)
+        label.textColor = getColorStyle(style: .lightGray)
         label.toAutoLayout()
         
         return label
@@ -45,8 +45,8 @@ class HabitCollectionViewCell: UICollectionViewCell {
     
     private lazy var descriptionLabel: UILabel = {
         var label = UILabel(frame: .zero)
-        label.font = getFontStyle(style: .Footnote1)
-        label.textColor = getColorStyle(style: .Gray)
+        label.font = getFontStyle(style: .footnote1)
+        label.textColor = getColorStyle(style: .gray)
         label.toAutoLayout()
         
         return label
@@ -94,28 +94,11 @@ class HabitCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    private func updateDescriptionLabel(habit: Habit) {
-        var countConsecutiveDate = 0
-        
-        let sortedTrackDates = habit.trackDates.sorted(by: { $0.compare($1) == .orderedDescending })
-        for (index, date) in sortedTrackDates.enumerated() {
-            if index + 1 < sortedTrackDates.count {
-                let currentDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date)
-                let nextDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: sortedTrackDates[index + 1])
-                    
-                if (currentDateComponents.year == nextDateComponents.year &&
-                        currentDateComponents.month == nextDateComponents.month &&
-                        (currentDateComponents.day ?? 0) - (nextDateComponents.day ?? 0) == 1) {
-                        countConsecutiveDate += 1
-                }
-                else { break }
-            }
-        }
-        descriptionLabel.text = "Подряд: \(countConsecutiveDate)"
-    }
+    private func updateDescriptionLabel(habit: Habit) { descriptionLabel.text = "Подряд: \(habit.trackDates.count)" }
 }
 
 extension HabitCollectionViewCell: CellProtocol {
+    typealias CellType = HabitModel
     
     static var reuseId: String { String(describing: self) }
     
@@ -147,9 +130,5 @@ extension HabitCollectionViewCell: CellProtocol {
                                      checkButton.heightAnchor.constraint(equalToConstant: 36)])
     }
     
-    func updateCell(object: Any) {
-        if let model = object as? HabitModel {
-            self.data = model
-        }
-    }
+    func updateCell(object: HabitModel) { self.data = object }
 }

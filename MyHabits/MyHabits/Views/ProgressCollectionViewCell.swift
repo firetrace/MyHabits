@@ -13,8 +13,8 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         var label = UILabel(frame: .zero)
         label.textAlignment = .left
         label.text = progressHeader
-        label.font = getFontStyle(style: .Body)
-        label.textColor = getColorStyle(style: .Gray)
+        label.font = getFontStyle(style: .body)
+        label.textColor = getColorStyle(style: .gray)
         label.toAutoLayout()
         
         return label
@@ -23,8 +23,8 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     private lazy var progressLabel: UILabel = {
         var label = UILabel(frame: .zero)
         label.textAlignment = .right
-        label.font = getFontStyle(style: .Body)
-        label.textColor = getColorStyle(style: .Gray)
+        label.font = getFontStyle(style: .body)
+        label.textColor = getColorStyle(style: .gray)
         label.toAutoLayout()
         
         return label
@@ -32,7 +32,7 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     
     private lazy var progressBar: UIProgressView = {
         var view = UIProgressView(frame: .zero)
-        view.progressTintColor = getColorStyle(style: .Magenta)
+        view.progressTintColor = getColorStyle(style: .magenta)
         view.layer.cornerRadius = 4
         view.layer.masksToBounds = true
         view.toAutoLayout()
@@ -52,7 +52,8 @@ class ProgressCollectionViewCell: UICollectionViewCell {
 }
 
 extension ProgressCollectionViewCell: CellProtocol {
-    
+    typealias CellType = Float
+
     static var reuseId: String { String(describing: self) }
             
     func layoutUpdate() {
@@ -80,10 +81,8 @@ extension ProgressCollectionViewCell: CellProtocol {
         ])
     }
     
-    func updateCell(object: Any) {
-        if let progress = object as? Float {
-            progressBar.progress = progress
-            progressLabel.text = String(format: "%.0f %%", progress * 100)
-        }
+    func updateCell(object: Float) {
+        progressBar.progress = object
+        progressLabel.text = String(format: "%.0f %%", object * 100)
     }
 }

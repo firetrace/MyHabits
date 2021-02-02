@@ -20,7 +20,7 @@ struct HabitModel {
         self.id = nil
         self.name = ""
         self.date = Date()
-        self.color = getColorStyle(style: .Orange)
+        self.color = getColorStyle(style: .orange)
     }
     
     init(name: String, date: Date, color: UIColor) {
@@ -42,5 +42,15 @@ struct HabitModel {
             return nil
         }
         return HabitsStore.shared.habits[index]
+    }
+    
+    mutating func updateData() {
+        guard let habit = getHabit() else {
+            return
+        }
+        
+        self.name = habit.name
+        self.date = habit.date
+        self.color = habit.color
     }
 }

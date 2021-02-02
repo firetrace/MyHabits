@@ -13,8 +13,8 @@ class InfoViewController: UIViewController {
         var view = InfoView(frame: .zero)
         view.toAutoLayout()
         
-        return view;
-    }();
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()

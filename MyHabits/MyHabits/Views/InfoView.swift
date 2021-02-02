@@ -28,7 +28,7 @@ class InfoView: UIView {
     private lazy var titleLabel: UILabel = {
         var title = UILabel(frame: .zero)
         title.text = data.title
-        title.font = getFontStyle(style: .Title)
+        title.font = getFontStyle(style: .title)
         title.toAutoLayout()
         
         return title
@@ -39,7 +39,7 @@ class InfoView: UIView {
         view.isScrollEnabled = false
         view.isEditable = false
         view.text = data.description
-        view.font = getFontStyle(style: .Body)
+        view.font = getFontStyle(style: .body)
         view.toAutoLayout()
         
         return view

@@ -30,7 +30,7 @@ class HabitView: UIView {
     private lazy var nameLabel: UILabel = {
         var label = UILabel(frame: .zero)
         label.text = habitNameTitle
-        label.font = getFontStyle(style: .Footnote1)
+        label.font = getFontStyle(style: .footnote1)
         label.toAutoLayout()
         
         return label
@@ -38,7 +38,7 @@ class HabitView: UIView {
     
     private lazy var nameText: UITextField = {
         var text = UITextField(frame: .zero)
-        text.font = getFontStyle(style: .Body)
+        text.font = getFontStyle(style: .body)
         text.placeholder = habitNamePlaceholder
         text.addTarget(self, action: #selector(updateName(_:)), for: .editingChanged)
         text.toAutoLayout()
@@ -49,7 +49,7 @@ class HabitView: UIView {
     private lazy var colorLabel: UILabel = {
         var label = UILabel(frame: .zero)
         label.text = habitColorTitle
-        label.font = getFontStyle(style: .Footnote1)
+        label.font = getFontStyle(style: .footnote1)
         label.toAutoLayout()
         
         return label
@@ -68,7 +68,7 @@ class HabitView: UIView {
     private lazy var dateLabel: UILabel = {
         var label = UILabel(frame: .zero)
         label.text = habitDateTitle
-        label.font = getFontStyle(style: .Footnote1)
+        label.font = getFontStyle(style: .footnote1)
         label.toAutoLayout()
         
         return label
@@ -95,7 +95,7 @@ class HabitView: UIView {
         var button = UIButton(frame: .zero)
         button.addTarget(self, action: #selector(del), for: .touchUpInside)
         button.setTitle("Удалить привычку", for: .normal)
-        button.titleLabel?.font = getFontStyle(style: .Body)
+        button.titleLabel?.font = getFontStyle(style: .body)
         button.setTitleColor(.red, for: .normal)
         button.toAutoLayout()
         
@@ -189,13 +189,13 @@ class HabitView: UIView {
     
     private func updateDateDescription(){
         let baseStr = NSMutableAttributedString(string: habitDateDescriptionPattern,
-                                                attributes: [NSAttributedString.Key.font: getFontStyle(style: .Body)])
+                                                attributes: [NSAttributedString.Key.font: getFontStyle(style: .body)])
         let formatter = DateFormatter()
         formatter.timeStyle = .short
             
         let dateStr = NSAttributedString(string: formatter.string(from: data.date),
-                                         attributes: [NSAttributedString.Key.font: getFontStyle(style: .Body),
-                                                      NSAttributedString.Key.foregroundColor: getColorStyle(style: .Magenta)])
+                                         attributes: [NSAttributedString.Key.font: getFontStyle(style: .body),
+                                                      NSAttributedString.Key.foregroundColor: getColorStyle(style: .magenta)])
         baseStr.append(dateStr)
         dateDescriptionLabel.attributedText = baseStr
     }

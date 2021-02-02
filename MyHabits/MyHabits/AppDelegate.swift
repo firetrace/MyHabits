@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
 
-        let color = getColorStyle(style: .Magenta)
+        let color = getColorStyle(style: .magenta)
         
         UINavigationBar.appearance().tintColor = color
         UINavigationBar.appearance().standardAppearance = appearance

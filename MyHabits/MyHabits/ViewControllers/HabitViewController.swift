@@ -12,28 +12,14 @@ class HabitViewController: UIViewController {
     weak var thisDelegate: HabitProtocol?
     
     private var isNew: Bool { get { habitView.data.isNew } }
-    
-    private lazy var navigationBar: UINavigationBar = {
-        let navigationBar = UINavigationBar(frame: .zero)
 
-        let navigationItem = UINavigationItem(title: isNew ? "Создать" : "Править")
-        navigationItem.largeTitleDisplayMode = .never
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(cancel))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(save))
-        navigationBar.setItems([navigationItem], animated: false)
-        navigationBar.toAutoLayout()
-        
-        return navigationBar
-    }()
-    
     private lazy var habitView: HabitView =  {
         var view = HabitView(frame: .zero)
         view.thisDelegate = self
         view.toAutoLayout()
         
-        return view;
-    }();
+        return view
+    }()
     
     convenience init(data: HabitModel) {
         self.init()
@@ -43,20 +29,20 @@ class HabitViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .systemBackground        
+        view.backgroundColor = .systemBackground
+        
+        navigationItem.title = isNew ? "Создать" : "Править"
+        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(cancel))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(save))
+        
         setupLayout()
     }
     
     private func setupLayout() {
-        view.addSubview(navigationBar)
         view.addSubview(habitView)
         
-        NSLayoutConstraint.activate([navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                                     navigationBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                                     navigationBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-                                     navigationBar.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
-                                     
-                                     habitView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
+        NSLayoutConstraint.activate([habitView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
                                      habitView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
                                      habitView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
                                      habitView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)])

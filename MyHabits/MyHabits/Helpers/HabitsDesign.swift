@@ -8,65 +8,65 @@
 import UIKit
 
 enum DesignFontStyle {
-    case Title
-    case Headline
-    case Body
-    case Footnote1
-    case Footnote2
-    case Caption
+    case title
+    case headline
+    case body
+    case footnote1
+    case footnote2
+    case caption
 }
 
 enum DesignColorStyle {
-    case Gray
-    case LightGray
-    case White
-    case Magenta
-    case Blue
-    case Green
-    case DarkBlue
-    case Orange
+    case gray
+    case lightGray
+    case white
+    case magenta
+    case blue
+    case green
+    case darkBlue
+    case orange
 }
 
 func getFontStyle(style: DesignFontStyle) -> UIFont {
 
     switch style {
-        case .Title:
+        case .title:
             return UIFont.systemFont(ofSize: 20, weight: .semibold)
-        case .Headline:
+        case .headline:
             return UIFont.systemFont(ofSize: 17, weight: .semibold)
-        case .Body:
+        case .body:
             return UIFont.systemFont(ofSize: 17, weight: .regular)
-        case .Footnote1:
+        case .footnote1:
             return UIFont.systemFont(ofSize: 13, weight: .semibold)
-        case .Footnote2:
+        case .footnote2:
             return UIFont.systemFont(ofSize: 13, weight: .regular)
-        case .Caption:
+        case .caption:
             return UIFont.systemFont(ofSize: 12, weight: .regular)
     }
 }
 
 func getColorStyle(style: DesignColorStyle) -> UIColor {
     switch style {
-        case .Gray:
+        case .gray:
             return UIColor.systemGray
-        case .LightGray:
+        case .lightGray:
             return UIColor.systemGray2
-        case .White:
+        case .white:
             return getColor(red: 242, green: 242, blue: 247)
-        case .Magenta:
+        case .magenta:
             return getColor(red: 161, green: 22, blue: 204)
-        case .Blue:
+        case .blue:
             return getColor(red: 41, green: 109, blue: 255)
-        case .Green:
+        case .green:
             return getColor(red: 29, green: 179, blue: 34)
-        case .DarkBlue:
+        case .darkBlue:
             return getColor(red: 98, green: 54, blue: 255)
-        case .Orange:
+        case .orange:
             return getColor(red: 255, green: 159, blue: 79)
     }
 }
 
 private func getColor(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat = 1) -> UIColor {
     let colorMax: CGFloat = 255
-    return UIColor(red: red/colorMax, green: green/colorMax, blue: blue/colorMax, alpha: alpha)
+    return UIColor.init(red: red/colorMax, green: green/colorMax, blue: blue/colorMax, alpha: alpha)
 }

@@ -28,7 +28,6 @@
 		45DC50AF25B0B1BB00A6F692 /* HabitProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC50AE25B0B1BB00A6F692 /* HabitProtocol.swift */; };
 		849E582625B6D1E30065A998 /* HabitDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E582525B6D1E30065A998 /* HabitDetailsViewController.swift */; };
 		849E582D25B6ED4E0065A998 /* HabitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E582C25B6ED4E0065A998 /* HabitTableViewCell.swift */; };
-		849E583125B6FD730065A998 /* CellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E583025B6FD730065A998 /* CellModel.swift */; };
 		849E583625B8073A0065A998 /* HabitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E583525B8073A0065A998 /* HabitModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,7 +55,6 @@
 		45DC50AE25B0B1BB00A6F692 /* HabitProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitProtocol.swift; sourceTree = "<group>"; };
 		849E582525B6D1E30065A998 /* HabitDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailsViewController.swift; sourceTree = "<group>"; };
 		849E582C25B6ED4E0065A998 /* HabitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTableViewCell.swift; sourceTree = "<group>"; };
-		849E583025B6FD730065A998 /* CellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellModel.swift; sourceTree = "<group>"; };
 		849E583525B8073A0065A998 /* HabitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,7 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				45DC50A025B043B500A6F692 /* InfoModel.swift */,
-				849E583025B6FD730065A998 /* CellModel.swift */,
 				849E583525B8073A0065A998 /* HabitModel.swift */,
 			);
 			path = Models;
@@ -244,7 +241,6 @@
 				45DC509B25B0358900A6F692 /* HabitsExtension.swift in Sources */,
 				45966FEF258CE268007A3B5A /* InfoViewController.swift in Sources */,
 				4588853225B1BA89004403B8 /* ProgressCollectionViewCell.swift in Sources */,
-				849E583125B6FD730065A998 /* CellModel.swift in Sources */,
 				454CBFD0258C989E00D2CD16 /* HabitsDesign.swift in Sources */,
 				849E582D25B6ED4E0065A998 /* HabitTableViewCell.swift in Sources */,
 				4588853525B1BAA2004403B8 /* HabitCollectionViewCell.swift in Sources */,
