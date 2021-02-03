@@ -78,7 +78,6 @@ extension HabitDetailsViewController: UITableViewDataSource {
         if let editCell = cell as? HabitTableViewCell, let index = data.id {
             let habit = HabitsStore.shared.habits[index]
             let date = HabitsStore.shared.dates.sorted(by: { $0.compare($1) == .orderedDescending })[indexPath.row]
-            print(HabitsStore.shared.dates)
             let isCheck = HabitsStore.shared.habit(habit, isTrackedIn: date)
             
             editCell.updateCell(object: CellModel(date: date, isCheck: isCheck))
