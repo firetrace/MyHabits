@@ -63,8 +63,8 @@ class InfoView: UIView {
         
         let contentViewWidth = contentView.widthAnchor.constraint(equalTo: widthAnchor)
         contentViewWidth.priority = .required
-        let contentViewHeght = contentView.heightAnchor.constraint(equalTo: heightAnchor)
-        contentViewHeght.priority = .defaultLow
+        let contentViewHeight = contentView.heightAnchor.constraint(equalTo: heightAnchor)
+        contentViewHeight.priority = .defaultLow
         
         NSLayoutConstraint.activate([scrollView.topAnchor.constraint(equalTo: topAnchor),
                                      scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -77,7 +77,7 @@ class InfoView: UIView {
                                      contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
                                      
                                      contentViewWidth,
-                                     contentViewHeght,
+                                     contentViewHeight,
 
                                      titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: topConst22),
                                      titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leadingConst16),

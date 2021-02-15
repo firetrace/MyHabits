@@ -11,7 +11,7 @@ class HabitDetailsViewController: UIViewController {
 
     weak var thisDelegate: HabitProtocol?
     
-    private var data: HabitModel = HabitModel()
+    private let data: HabitModel
     
     private lazy var editButton: UIBarButtonItem = {
         var button = UIBarButtonItem(title: "Править", style: .plain, target: self, action: #selector(edit))
@@ -29,9 +29,13 @@ class HabitDetailsViewController: UIViewController {
         return table
     }()
 
-    convenience init(data: HabitModel) {
-        self.init()
+    init(data: HabitModel) {
         self.data = data
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
