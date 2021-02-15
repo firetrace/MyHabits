@@ -9,7 +9,7 @@ import UIKit
 
 class HabitDetailsViewController: UIViewController {
 
-    weak var thisDelegate: HabitProtocol?
+    weak var thisDelegate: HabitDelegate?
     
     private var data: HabitModel
     
@@ -90,7 +90,7 @@ extension HabitDetailsViewController: UITableViewDataSource {
     }
 }
 
-extension HabitDetailsViewController: HabitProtocol {
+extension HabitDetailsViewController: HabitDelegate {
 
     func updateData() {
         data.updateData()

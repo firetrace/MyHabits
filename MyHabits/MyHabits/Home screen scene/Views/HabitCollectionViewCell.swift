@@ -9,7 +9,7 @@ import UIKit
 
 class HabitCollectionViewCell: UICollectionViewCell {
     
-    weak var thisDelegate: HabitProtocol?
+    weak var thisDelegate: HabitDelegate?
     
     private var data: HabitModel = HabitModel()
     {

@@ -6,6 +6,7 @@
 //
 
 protocol CellProtocol {
+    
     associatedtype CellType
     
     static var reuseId: String { get }

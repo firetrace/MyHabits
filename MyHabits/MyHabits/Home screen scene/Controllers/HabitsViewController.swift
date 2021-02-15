@@ -135,7 +135,7 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension HabitsViewController: HabitProtocol {
+extension HabitsViewController: HabitDelegate {
 
     func updateData() {
         collectionView.reloadData()

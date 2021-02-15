@@ -9,7 +9,7 @@ import UIKit
 
 class HabitView: UIView {
 
-    weak var thisDelegate: HabitProtocol?
+    weak var thisDelegate: HabitDelegate?
     
     var data: HabitModel = HabitModel()
     {

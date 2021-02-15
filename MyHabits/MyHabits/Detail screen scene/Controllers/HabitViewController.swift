@@ -9,7 +9,7 @@ import UIKit
 
 class HabitViewController: UIViewController {
     
-    weak var thisDelegate: HabitProtocol?
+    weak var thisDelegate: HabitDelegate?
     
     private var isNew: Bool { get { habitView.data.isNew } }
 
@@ -69,7 +69,7 @@ class HabitViewController: UIViewController {
     }
 }
 
-extension HabitViewController: HabitProtocol {
+extension HabitViewController: HabitDelegate {
     
     func updateData() {
         thisDelegate?.updateData()
