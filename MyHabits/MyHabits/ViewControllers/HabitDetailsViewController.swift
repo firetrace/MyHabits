@@ -11,7 +11,7 @@ class HabitDetailsViewController: UIViewController {
 
     weak var thisDelegate: HabitProtocol?
     
-    private let data: HabitModel
+    private var data: HabitModel
     
     private lazy var editButton: UIBarButtonItem = {
         var button = UIBarButtonItem(title: "Править", style: .plain, target: self, action: #selector(edit))
